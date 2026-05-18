@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>光合作用互動教學</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #0f3b26;
+      --deep: #143f2f;
+      --cream: #f5efe6;
+      --amber: #d39b46;
+      --light: #e9ddcf;
+      --surface: #1f5a44;
+      --text: #f7f0e7;
+      --shadow: rgba(0, 0, 0, 0.18);
+      --border: rgba(255,255,255,0.14);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: linear-gradient(180deg, #081f12 0%, #102b1d 45%, #142f22 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container {
+      width: min(1200px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+    .hero {
+      background: radial-gradient(circle at top left, rgba(212,155,70,0.16), transparent 35%),
+                  linear-gradient(180deg, var(--deep), var(--dark));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 3rem 2rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+    }
+    .hero::after {
+      content: '☘️';
+      position: absolute;
+      font-size: 4rem;
+      top: 1.5rem;
+      right: 1.5rem;
+      animation: sway 4s ease-in-out infinite;
+      transform-origin: center 120%;
+      opacity: 0.8;
+    }
+    @keyframes sway {
+      0%,100% { transform: rotate(0deg); }
+      25% { transform: rotate(8deg); }
+      50% { transform: rotate(-6deg); }
+      75% { transform: rotate(5deg); }
+    }
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      letter-spacing: 0.05em;
+    }
+    .hero p {
+      max-width: 760px;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      color: rgba(245,239,230,0.93);
+    }
+    .banner {
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      background: rgba(245,239,230,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.45rem, 2vw, 2rem);
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    }
+    .section-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--amber);
+    }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 1.6rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.16);
+    }
+    .card:hover,
+    .card.active {
+      transform: translateY(-6px);
+      border-color: rgba(211,155,70,0.9);
+      background: rgba(245,239,230,0.12);
+    }
+    .card span {
+      display: inline-flex;
+      padding: .35rem .75rem;
+      border-radius: 999px;
+      background: rgba(211,155,70,0.16);
+      color: var(--amber);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      margin: 0 0 .75rem;
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+    .card p {
+      margin: 0;
+      line-height: 1.75;
+      color: rgba(245,239,230,0.9);
+      font-size: 0.98rem;
+    }
+    .detail-panel {
+      min-height: 240px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      padding: 1.8rem;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.16);
+    }
+    .detail-panel.hidden {
+      display: none;
+    }
+    .detail-panel .labels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.3rem;
+    }
+    .detail-panel .chip {
+      background: rgba(255,255,255,0.08);
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .detail-panel h4 {
+      margin: 0 0 0.9rem;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.25rem;
+      color: var(--cream);
+    }
+    .detail-panel p {
+      margin: 0;
+      line-height: 1.9;
+      color: rgba(245,239,230,0.93);
+    }
+    .fade-in {
+      animation: fadeIn 0.55s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .quiz {
+      margin-top: 2.5rem;
+    }
+    .quiz .card {
+      cursor: default;
+    }
+    .questions {
+      display: grid;
+      gap: 1.25rem;
+    }
+    .question {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 1.4rem 1.4rem 1.2rem;
+    }
+    .question h5 {
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      color: var(--cream);
+    }
+    .options {
+      display: grid;
+      gap: 0.9rem;
+    }
+    .option {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: border-color 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+    }
+    .option:hover { border-color: rgba(211,155,70,0.7); }
+    .option.selected { background: rgba(211,155,70,0.15); border-color: rgba(211,155,70,0.9); }
+    .option.correct { background: rgba(90,150,100,0.18); border-color: rgba(90,150,100,0.9); }
+    .option.wrong { background: rgba(170,70,60,0.18); border-color: rgba(170,70,60,0.9); }
+    .option small {
+      color: rgba(245,239,230,0.8);
+      font-size: 0.9rem;
+    }
+    .feedback {
+      margin-top: 0.9rem;
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(245,239,230,0.95);
+      line-height: 1.7;
+    }
+    .score-panel {
+      margin-top: 1.5rem;
+      padding: 1.6rem;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .score-panel strong {
+      font-size: 1.2rem;
+      color: var(--amber);
+    }
+    .score-panel button {
+      border: none;
+      color: var(--dark);
+      background: var(--amber);
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.85rem 1.4rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .score-panel button:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+    @media (max-width: 950px) {
+      .stage-grid { grid-template-columns: 1fr; }
+      .banner { font-size: 1.4rem; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 1.25rem 0 3rem; }
+      .hero { padding: 2.2rem 1.4rem; border-radius: 22px; }
+      .hero::after { font-size: 3.2rem; top: 1rem; right: 1rem; }
+      .stage-grid { gap: 1rem; }
+      .detail-panel { padding: 1.4rem; }
+      .question { padding: 1rem 1rem 0.9rem; }
+      .option { padding: 0.8rem 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <h1>光合作用</h1>
+      <p>探索綠色植物如何把光能轉換成化學能，從葉綠素吸收光線到製造葡萄糖，再到釋放氧氣的生命奇蹟。</p>
+    </section>
+
+    <section class="banner" aria-label="總反應式">
+      6CO₂ + 6H₂O + 光能 → C₆H₁₂O₆ + 6O₂
+    </section>
+
+    <section>
+      <div class="section-title">三大階段</div>
+      <div class="stage-grid" id="stageGrid">
+        <article class="card active" data-stage="1">
+          <span>Stage 01</span>
+          <h3>光反應（類囊體膜）</h3>
+          <p>葉綠素吸收光能、光解水、產生 ATP 與 NADPH、釋放 O₂。</p>
+        </article>
+        <article class="card" data-stage="2">
+          <span>Stage 02</span>
+          <h3>卡爾文循環（葉綠體基質）</h3>
+          <p>CO₂ 固定、RuBisCO 酵素參與反應，產生 G3P 作為碳骨架。</p>
+        </article>
+        <article class="card" data-stage="3">
+          <span>Stage 03</span>
+          <h3>葡萄糖合成（最終產物）</h3>
+          <p>G3P 合成葡萄糖，供植物製造澱粉、脂肪與其他碳水化合物。</p>
+        </article>
+      </div>
+      <div class="detail-panel fade-in" id="detailPanel">
+        <div class="labels" id="detailLabels"></div>
+        <h4 id="detailTitle"></h4>
+        <p id="detailText"></p>
+      </div>
+    </section>
+
+    <section class="quiz">
+      <div class="section-title">小測驗</div>
+      <div class="questions" id="quizContainer"></div>
+      <div class="score-panel" id="scorePanel" style="display:none;">
+        <div>
+          <strong id="scoreText"></strong>
+          <div id="encouragement"></div>
+        </div>
+        <button id="retryButton">再試一次</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const stages = {
+      1: {
+        title: '光反應（類囊體膜）',
+        labels: ['條件：光能', '場所：類囊體膜', '產物：ATP / NADPH / O₂'],
+        text: '光反應發生在葉綠體的類囊體膜上，葉綠素吸收光能並啟動電子傳遞鏈，光解水生成氫離子與電子，產生 ATP、NADPH，並釋放 O₂ 做為副產品。'
+      },
+      2: {
+        title: '卡爾文循環（葉綠體基質）',
+        labels: ['條件：ATP + NADPH', '場所：葉綠體基質', '產物：G3P'],
+        text: '卡爾文循環在葉綠體基質進行，CO₂ 被 RuBisCO 酵素固定後，經過多重反應生成 G3P，作為合成葡萄糖與其他碳化合物的中間產物。'
+      },
+      3: {
+        title: '葡萄糖合成（最終產物）',
+        labels: ['條件：G3P 累積', '場所：葉綠體內', '產物：葡萄糖 / 澱粉 / 脂肪'],
+        text: '透過卡爾文循環產生的 G3P 進一步合成葡萄糖。這些葡萄糖可轉換成澱粉、脂肪或其他碳水化合物，為植物儲存能量。'
+      }
+    };
+
+    const detailLabels = document.getElementById('detailLabels');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailText = document.getElementById('detailText');
+    const detailPanel = document.getElementById('detailPanel');
+    const cards = document.querySelectorAll('.card[data-stage]');
+
+    function showStage(stageId) {
+      const stage = stages[stageId];
+      if (!stage) return;
+      cards.forEach(card => {
+        card.classList.toggle('active', card.dataset.stage === String(stageId));
+      });
+      detailLabels.innerHTML = stage.labels.map(label => `<span class="chip">${label}</span>`).join('');
+      detailTitle.textContent = stage.title;
+      detailText.textContent = stage.text;
+      detailPanel.classList.remove('hidden');
+      detailPanel.classList.remove('fade-in');
+      void detailPanel.offsetWidth;
+      detailPanel.classList.add('fade-in');
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => showStage(card.dataset.stage));
+    });
+
+    showStage(1);
+
+    const quizContainer = document.getElementById('quizContainer');
+    const scorePanel = document.getElementById('scorePanel');
+    const scoreText = document.getElementById('scoreText');
+    const encouragement = document.getElementById('encouragement');
+    const retryButton = document.getElementById('retryButton');
+
+    const questions = [
+      {
+        question: '光反應最主要發生在植物哪個結構？',
+        choices: ['葉綠體基質', '類囊體膜', '細胞質基質', '葉肉細胞細胞壁'],
+        answer: 1,
+        explanation: '光反應發生在葉綠體的類囊體膜上，葉綠素嵌入於此膜中吸收光能。'
+      },
+      {
+        question: '下列哪一個是光合作用的總反應式？',
+        choices: ['6CO₂ + 6H₂O + 光能 → C₆H₁₂O₆ + 6O₂', 'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O', '6CO₂ + 6O₂ → C₆H₁₂O₆ + 6H₂O', '6H₂O + 6O₂ → C₆H₁₂O₆ + 6CO₂'],
+        answer: 0,
+        explanation: '正確的光合作用總反應式是用二氧化碳、水和光能合成葡萄糖並釋放氧氣。'
+      },
+      {
+        question: '卡爾文循環中最先被固定的物質是？',
+        choices: ['H₂O', 'O₂', 'CO₂', 'G3P'],
+        answer: 2,
+        explanation: '卡爾文循環的第一步是將 CO₂ 固定到有機分子上，這個步驟由 RuBisCO 催化。'
+      },
+      {
+        question: '光反應直接產生下列哪一項？',
+        choices: ['葡萄糖', 'ATP 與 NADPH', 'RuBisCO', '澱粉'],
+        answer: 1,
+        explanation: '光反應產生 ATP 和 NADPH，供卡爾文循環合成葡萄糖使用。'
+      },
+      {
+        question: '光合作用釋放的 O₂ 主要來自哪個來源？',
+        choices: ['CO₂ 分解', '光能轉換', '水分子光解', '葡萄糖分解'],
+        answer: 2,
+        explanation: '光合作用中 O₂ 來源於光解水，水分子被分解成氧氣、電子和質子。'
+      }
+    ];
+
+    let answeredCount = 0;
+    let score = 0;
+
+    function createQuiz() {
+      quizContainer.innerHTML = '';
+      answeredCount = 0;
+      score = 0;
+      scorePanel.style.display = 'none';
+      encouragement.textContent = '';
+
+      questions.forEach((item, index) => {
+        const questionEl = document.createElement('div');
+        questionEl.className = 'question';
+        questionEl.innerHTML = `<h5>${index + 1}. ${item.question}</h5><div class="options"></div>`;
+        const optionsEl = questionEl.querySelector('.options');
+
+        item.choices.forEach((choice, choiceIndex) => {
+          const option = document.createElement('button');
+          option.type = 'button';
+          option.className = 'option';
+          option.innerHTML = `<span>${choice}</span><small></small>`;
+          option.addEventListener('click', () => selectAnswer(index, choiceIndex, option, questionEl, item));
+          optionsEl.appendChild(option);
+        });
+
+        quizContainer.appendChild(questionEl);
+      });
+    }
+
+    function selectAnswer(questionIndex, choiceIndex, optionEl, questionEl, item) {
+      if (questionEl.dataset.answered) return;
+      questionEl.dataset.answered = 'true';
+      answeredCount++;
+      const isCorrect = choiceIndex === item.answer;
+      if (isCorrect) { score++; optionEl.classList.add('correct'); }
+      else { optionEl.classList.add('wrong'); }
+      optionEl.classList.add('selected');
+      const options = questionEl.querySelectorAll('.option');
+      options.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === item.answer) btn.classList.add('correct');
+      });
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback';
+      feedback.textContent = isCorrect ? `答對！${item.explanation}` : `答錯。${item.explanation}`;
+      questionEl.appendChild(feedback);
+      if (answeredCount === questions.length) showScore();
+    }
+
+    function showScore() {
+      scorePanel.style.display = 'flex';
+      scoreText.textContent = `得分：${score} / ${questions.length}`;
+      const rate = score / questions.length;
+      encouragement.textContent = rate >= 0.8 ? '太棒了！你已經掌握光合作用的關鍵步驟。' : rate >= 0.6 ? '很好！再複習一次可以更穩固概念。' : '加油！再重新作答一次，你會更清楚光合作用流程。';
+    }
+
+    retryButton.addEventListener('click', createQuiz);
+    createQuiz();
+  </script>
+</body>
+</html>
