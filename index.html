@@ -167,10 +167,21 @@
       font-size: 1.25rem;
       color: var(--cream);
     }
-    .detail-panel p {
+    .detail-panel p,
+    .detail-panel ul {
       margin: 0;
-      line-height: 1.9;
       color: rgba(245,239,230,0.93);
+      line-height: 1.9;
+    }
+    .detail-panel ul {
+      margin-top: 0.8rem;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.65rem;
+    }
+    .detail-panel li {
+      list-style: disc inside;
+      font-size: 0.98rem;
     }
     .fade-in {
       animation: fadeIn 0.55s ease-out;
@@ -330,17 +341,37 @@
       1: {
         title: '光反應（類囊體膜）',
         labels: ['條件：光能', '場所：類囊體膜', '產物：ATP / NADPH / O₂'],
-        text: '光反應發生在葉綠體的類囊體膜上，葉綠素吸收光能並啟動電子傳遞鏈，光解水生成氫離子與電子，產生 ATP、NADPH，並釋放 O₂ 做為副產品。'
+        text: `<ul>
+          <li>葉綠素吸收光能 → 儲存在高能電子中，傳遞至電子傳遞鏈。</li>
+          <li>光解水（H₂O）→ 拆解為 H⁺、電子與 O₂，O₂ 釋放至大氣。</li>
+          <li>產生 ATP → 電子傳遞鏈驅動 ATP 合成酶，ATP 儲存在葉綠體基質。</li>
+          <li>產生 NADPH → NADP⁺ 還原為 NADPH，儲存在葉綠體基質。</li>
+          <li>釋放 O₂ → 光解水的副產品，排至大氣。</li>
+        </ul>`
       },
       2: {
         title: '卡爾文循環（葉綠體基質）',
         labels: ['條件：ATP + NADPH', '場所：葉綠體基質', '產物：G3P'],
-        text: '卡爾文循環在葉綠體基質進行，CO₂ 被 RuBisCO 酵素固定後，經過多重反應生成 G3P，作為合成葡萄糖與其他碳化合物的中間產物。'
+        text: `<ul>
+          <li>CO₂ 固定 → 與五碳化合物 RuBP 結合。</li>
+          <li>RuBisCO 酵素催化 → 催化 CO₂ 與 RuBP 的結合反應。</li>
+          <li>產生三碳化合物（3-PGA）→ 分解為兩分子三碳化合物。</li>
+          <li>消耗 ATP 與 NADPH → 將 3-PGA 還原為 G3P。</li>
+          <li>產生 G3P → 儲存在葉綠體基質，是葡萄糖合成的直接前驅物。</li>
+          <li>RuBP 再生 → 部分 G3P 消耗 ATP 重新合成 RuBP，循環持續進行。</li>
+        </ul>`
       },
       3: {
         title: '葡萄糖合成（最終產物）',
-        labels: ['條件：G3P 累積', '場所：葉綠體內', '產物：葡萄糖 / 澱粉 / 脂肪'],
-        text: '透過卡爾文循環產生的 G3P 進一步合成葡萄糖。這些葡萄糖可轉換成澱粉、脂肪或其他碳水化合物，為植物儲存能量。'
+        labels: ['條件：G3P 累積', '場所：葉綠體基質', '產物：葡萄糖 / 澱粉 / 脂肪 / 蔗糖 / 胺基酸'],
+        text: `<ul>
+          <li>G3P 縮合 → 兩分子 G3P（三碳）縮合成一分子葡萄糖（六碳）。</li>
+          <li>葡萄糖暫存 → 短期儲存在葉綠體基質，隨後輸出至細胞質。</li>
+          <li>合成澱粉 → 聚合後儲存在葉綠體的澱粉粒（長期儲存）。</li>
+          <li>合成蔗糖 → 在細胞質中轉為蔗糖，透過韌皮部輸送至全株。</li>
+          <li>合成脂肪 → G3P 進入脂肪酸合成路徑，儲存在油脂體。</li>
+          <li>合成胺基酸 → 結合氮素後合成胺基酸，進一步組成蛋白質。</li>
+        </ul>`
       }
     };
 
@@ -358,7 +389,7 @@
       });
       detailLabels.innerHTML = stage.labels.map(label => `<span class="chip">${label}</span>`).join('');
       detailTitle.textContent = stage.title;
-      detailText.textContent = stage.text;
+      detailText.innerHTML = stage.text;
       detailPanel.classList.remove('hidden');
       detailPanel.classList.remove('fade-in');
       void detailPanel.offsetWidth;
