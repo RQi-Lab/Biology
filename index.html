@@ -9,15 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --dark: #0f3b26;
-      --deep: #143f2f;
-      --cream: #f5efe6;
-      --amber: #d39b46;
-      --light: #e9ddcf;
-      --surface: #1f5a44;
-      --text: #f7f0e7;
-      --shadow: rgba(0, 0, 0, 0.18);
-      --border: rgba(255,255,255,0.14);
+      --dark: #123324;
+      --deep: #1a4230;
+      --cream: #1a332a;
+      --amber: #b57a22;
+      --light: #edf2ef;
+      --surface: #ffffff;
+      --text: #222b25;
+      --text-muted: #556b60;
+      --shadow: rgba(18, 51, 36, 0.06);
+      --border: rgba(18, 51, 36, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -25,7 +26,7 @@
     body {
       margin: 0;
       font-family: 'Noto Sans TC', sans-serif;
-      background: linear-gradient(180deg, #081f12 0%, #102b1d 45%, #142f22 100%);
+      background: #ffffff;
       color: var(--text);
       min-height: 100vh;
     }
@@ -36,14 +37,13 @@
       padding: 2rem 0 4rem;
     }
     .hero {
-      background: radial-gradient(circle at top left, rgba(212,155,70,0.16), transparent 35%),
-                  linear-gradient(180deg, var(--deep), var(--dark));
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, #f4f8f6 0%, #edf3f0 100%);
+      border: 1px solid rgba(18, 51, 36, 0.05);
       border-radius: 28px;
       padding: 3rem 2rem;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 30px var(--shadow);
     }
     .hero::after {
       content: '☘️';
@@ -66,18 +66,19 @@
       font-family: 'Noto Serif TC', serif;
       font-size: clamp(2.8rem, 5vw, 4.8rem);
       letter-spacing: 0.05em;
+      color: var(--dark);
     }
     .hero p {
       max-width: 760px;
       line-height: 1.8;
       font-size: 1.05rem;
-      color: rgba(245,239,230,0.93);
+      color: var(--text-muted);
     }
     .banner {
       margin: 2.5rem 0;
       padding: 1.5rem 2rem;
-      background: rgba(245,239,230,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #edf5f1;
+      border: 1px solid rgba(18, 51, 36, 0.05);
       border-radius: 26px;
       display: flex;
       justify-content: center;
@@ -85,14 +86,15 @@
       font-family: 'Noto Serif TC', serif;
       font-size: clamp(1.45rem, 2vw, 2rem);
       letter-spacing: 0.06em;
-      color: var(--cream);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+      color: var(--dark);
+      box-shadow: 0 8px 24px var(--shadow);
     }
     .section-title {
       font-family: 'Noto Serif TC', serif;
       font-size: 1.6rem;
       margin-bottom: 1rem;
       color: var(--amber);
+      font-weight: 700;
     }
     .stage-grid {
       display: grid;
@@ -101,48 +103,51 @@
       margin-bottom: 2rem;
     }
     .card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #f8faf9;
+      border: 1px solid var(--border);
       border-radius: 24px;
       padding: 1.6rem;
       cursor: pointer;
-      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.16);
+      transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 20px rgba(18, 51, 36, 0.02);
     }
     .card:hover,
     .card.active {
       transform: translateY(-6px);
-      border-color: rgba(211,155,70,0.9);
-      background: rgba(245,239,230,0.12);
+      border-color: var(--amber);
+      background: var(--surface);
+      box-shadow: 0 12px 30px rgba(18, 51, 36, 0.08);
     }
     .card span {
       display: inline-flex;
       padding: .35rem .75rem;
       border-radius: 999px;
-      background: rgba(211,155,70,0.16);
+      background: rgba(181, 122, 19, 0.08);
       color: var(--amber);
       font-size: 0.9rem;
       margin-bottom: 1rem;
+      font-weight: 500;
     }
     .card h3 {
       margin: 0 0 .75rem;
       font-size: 1.2rem;
       line-height: 1.3;
+      color: var(--dark);
     }
     .card p {
       margin: 0;
       line-height: 1.75;
-      color: rgba(245,239,230,0.9);
+      color: var(--text-muted);
       font-size: 0.98rem;
     }
     .detail-panel {
       min-height: 240px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #f8faf9;
+      border: 1px solid var(--border);
       border-radius: 26px;
       padding: 1.8rem;
       overflow: hidden;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.16);
+      box-shadow: 0 12px 35px var(--shadow);
     }
     .detail-panel.hidden {
       display: none;
@@ -154,23 +159,24 @@
       margin-bottom: 1.3rem;
     }
     .detail-panel .chip {
-      background: rgba(255,255,255,0.08);
+      background: #edf2ef;
       padding: 0.55rem 0.9rem;
       border-radius: 999px;
       font-size: 0.9rem;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--dark);
+      border: 1px solid rgba(18, 51, 36, 0.05);
+      font-weight: 500;
     }
     .detail-panel h4 {
       margin: 0 0 0.9rem;
       font-family: 'Noto Serif TC', serif;
       font-size: 1.25rem;
-      color: var(--cream);
+      color: var(--dark);
     }
     .detail-panel p,
     .detail-panel ul {
       margin: 0;
-      color: rgba(245,239,230,0.93);
+      color: var(--text);
       line-height: 1.9;
     }
     .detail-panel ul {
@@ -196,65 +202,103 @@
     .quiz .card {
       cursor: default;
     }
+    .quiz .card:hover {
+      transform: none;
+      border-color: var(--border);
+      box-shadow: 0 8px 20px rgba(18, 51, 36, 0.02);
+    }
     .questions {
       display: grid;
       gap: 1.25rem;
     }
     .question {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #f8faf9;
+      border: 1px solid var(--border);
       border-radius: 24px;
       padding: 1.4rem 1.4rem 1.2rem;
+      box-shadow: 0 6px 18px rgba(18, 51, 36, 0.02);
     }
     .question h5 {
       margin: 0 0 1rem;
       font-size: 1rem;
-      color: var(--cream);
+      color: var(--dark);
     }
     .options {
       display: grid;
       gap: 0.9rem;
     }
     .option {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--surface);
+      border: 1px solid rgba(18, 51, 36, 0.08);
       border-radius: 999px;
-      padding: 0.9rem 1rem;
+      padding: 0.9rem 1.2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      transition: border-color 0.25s ease, background 0.25s ease;
+      transition: all 0.25s ease;
       cursor: pointer;
+      /* 重置 button 原生屬性 */
+      font-family: inherit;
+      font-size: inherit;
+      color: var(--text); /* 確保選項文字顏色一致 */
+      width: 100%;
+      text-align: left;
+      outline: none;
+      box-shadow: 0 4px 10px rgba(18, 51, 36, 0.01);
     }
-    .option:hover { border-color: rgba(211,155,70,0.7); }
-    .option.selected { background: rgba(211,155,70,0.15); border-color: rgba(211,155,70,0.9); }
-    .option.correct { background: rgba(90,150,100,0.18); border-color: rgba(90,150,100,0.9); }
-    .option.wrong { background: rgba(170,70,60,0.18); border-color: rgba(170,70,60,0.9); }
+    .option:hover {
+      border-color: var(--amber);
+      background: #fffbf5;
+      box-shadow: 0 4px 15px rgba(181, 122, 19, 0.08);
+    }
+    /* 不論選中、正確或錯誤，文字顏色一律保持為 var(--text)，只改變背景和邊框 */
+    .option.selected {
+      background: rgba(181, 122, 19, 0.08);
+      border-color: var(--amber);
+      color: var(--text) !important;
+    }
+    .option.correct {
+      background: #edf8f0;
+      border-color: #2e7d32;
+      color: var(--text) !important;
+    }
+    .option.wrong {
+      background: #fdf2f2;
+      border-color: #c62828;
+      color: var(--text) !important;
+    }
     .option small {
-      color: rgba(245,239,230,0.8);
+      color: var(--text-muted);
       font-size: 0.9rem;
+    }
+    .option:disabled {
+      cursor: not-allowed;
+      opacity: 0.85; /* 藉由透明度表現禁用，而非讓瀏覽器強制將字體變灰，維持文字原本的一致顏色 */
+      color: var(--text) !important; /* 強制防止部分瀏覽器的 default disabled 覆蓋文字顏色 */
     }
     .feedback {
       margin-top: 0.9rem;
-      padding: 0.95rem 1rem;
+      padding: 0.95rem 1.2rem;
       border-radius: 18px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(245,239,230,0.95);
+      background: #edf2ef;
+      border: 1px solid var(--border);
+      color: var(--text);
       line-height: 1.7;
+      font-size: 0.95rem;
     }
     .score-panel {
       margin-top: 1.5rem;
       padding: 1.6rem;
       border-radius: 26px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: #edf5f1;
+      border: 1px solid rgba(18, 51, 36, 0.08);
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 10px 30px var(--shadow);
     }
     .score-panel strong {
       font-size: 1.2rem;
@@ -262,15 +306,19 @@
     }
     .score-panel button {
       border: none;
-      color: var(--dark);
-      background: var(--amber);
+      color: #ffffff;
+      background: var(--dark);
       font-weight: 700;
       border-radius: 999px;
-      padding: 0.85rem 1.4rem;
+      padding: 0.85rem 1.6rem;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
-    .score-panel button:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+    .score-panel button:hover {
+      background: var(--deep);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(18, 51, 36, 0.15);
+    }
     @media (max-width: 950px) {
       .stage-grid { grid-template-columns: 1fr; }
       .banner { font-size: 1.4rem; }
