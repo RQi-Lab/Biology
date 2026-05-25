@@ -313,6 +313,7 @@
       padding: 0.85rem 1.6rem;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      font-family: inherit; /* 確保在 Chrome/Edge 等 Windows 瀏覽器上完美繼承思源黑體 */
     }
     .score-panel button:hover {
       background: var(--deep);
@@ -331,6 +332,454 @@
       .detail-panel { padding: 1.4rem; }
       .question { padding: 1rem 1rem 0.9rem; }
       .option { padding: 0.8rem 0.95rem; }
+    }
+
+    /* ==========================================================================
+       光合作用模擬實驗室 (Photosynthesis Simulation Lab) CSS 樣式
+       ========================================================================== */
+    .simulation {
+      margin-top: 2.5rem;
+    }
+    .sim-panel {
+      background: #f8faf9;
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 1.8rem;
+      box-shadow: 0 12px 35px var(--shadow);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.8rem;
+    }
+    @media (max-width: 950px) {
+      .sim-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+    .sim-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+    .control-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 4px 12px rgba(18, 51, 36, 0.01);
+    }
+    .control-group label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+    }
+    .control-group label span {
+      font-family: monospace;
+      color: var(--amber);
+      font-size: 1rem;
+    }
+    .sim-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 99px;
+      background: #edf2ef;
+      outline: none;
+      transition: background 0.3s;
+    }
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--amber);
+      cursor: pointer;
+      border: 2px solid var(--surface);
+      box-shadow: 0 3px 8px rgba(181, 122, 19, 0.25);
+      transition: transform 0.1s;
+    }
+    .sim-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .water-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #edf5f1;
+      border: 1px solid rgba(18, 51, 36, 0.1);
+      color: var(--dark);
+      padding: 0.75rem;
+      border-radius: 12px;
+      width: 100%;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit; /* 確保在 Chrome/Edge 等 Windows 瀏覽器上完美繼承思源黑體 */
+    }
+    .water-btn:hover {
+      background: #2e7d32;
+      color: #ffffff;
+      border-color: #2e7d32;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+    }
+    .action-btn-group {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .action-btn {
+      flex: 1;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: inherit; /* 確保在 Chrome/Edge 等 Windows 瀏覽器上完美繼承思源黑體 */
+    }
+    .start-btn {
+      background: var(--dark);
+      color: #ffffff;
+    }
+    .start-btn:hover:not(:disabled) {
+      background: var(--deep);
+      box-shadow: 0 6px 18px rgba(18, 51, 36, 0.2);
+    }
+    .stop-btn {
+      background: #e57373;
+      color: #ffffff;
+    }
+    .stop-btn:hover:not(:disabled) {
+      background: #d32f2f;
+      box-shadow: 0 6px 18px rgba(211, 47, 47, 0.2);
+    }
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    /* 反應室 (Chamber) & 數據面板 */
+    .sim-display {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .chamber {
+      background: #edf2ef;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 8px rgba(18, 51, 36, 0.03);
+      transition: background-color 0.5s ease;
+    }
+    .chamber-leaf {
+      font-size: 5.5rem;
+      z-index: 2;
+      filter: drop-shadow(0 4px 10px rgba(18, 51, 36, 0.12));
+      transition: transform 0.5s ease;
+    }
+    .chamber.active .chamber-leaf {
+      animation: pulseLeaf 2.5s ease-in-out infinite;
+    }
+    @keyframes pulseLeaf {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06) rotate(3deg); }
+    }
+    .sun-ray {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top, rgba(211, 155, 70, 0.2) 0%, transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+    .bubble {
+      position: absolute;
+      bottom: 0;
+      background: rgba(46, 125, 50, 0.08);
+      border: 1px solid rgba(46, 125, 50, 0.3);
+      border-radius: 50%;
+      color: #2e7d32;
+      font-size: 0.65rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      animation: bubbleUp 3s linear infinite;
+      z-index: 3;
+    }
+    @keyframes bubbleUp {
+      0% {
+        transform: translateY(10px) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-200px) translateX(var(--drift));
+        opacity: 0;
+      }
+    }
+    
+    /* 數據監測 */
+    .dashboard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .dash-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .dash-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .dash-label span {
+      font-family: monospace;
+      color: var(--dark);
+    }
+    .meter-container {
+      width: 100%;
+      height: 10px;
+      background: #edf2ef;
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid rgba(18, 51, 36, 0.05);
+    }
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+    .water-fill {
+      background: linear-gradient(90deg, #42a5f5, #1e88e5);
+    }
+    .co2-fill {
+      background: linear-gradient(90deg, #90a4ae, #546e7a);
+    }
+    .atp-fill {
+      background: linear-gradient(90deg, #ffb74d, #f57c00);
+    }
+    .nadph-fill {
+      background: linear-gradient(90deg, #4db6ac, #00897b);
+    }
+    
+    .counters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 0.2rem;
+    }
+    .counter-card {
+      background: #f8faf9;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.75rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(18, 51, 36, 0.01);
+    }
+    .counter-val {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--amber);
+      font-family: monospace;
+    }
+    .counter-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+    
+    /* 提示面板 */
+    .insight-panel {
+      grid-column: 1 / -1;
+      background: #edf5f1;
+      border: 1px solid rgba(18, 51, 36, 0.08);
+      border-radius: 18px;
+      padding: 0.95rem 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .insight-icon {
+      font-size: 1.15rem;
+      margin-top: 0.1rem;
+    }
+    .insight-text {
+      flex: 1;
+    }
+    .insight-text strong {
+      color: var(--dark);
+    }
+
+    /* ==========================================================================
+       小測驗高互動性升級 (Gamified Card Quiz) CSS 樣式
+       ========================================================================== */
+
+    /* 進度條容器 */
+    .quiz-progress {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1rem 1.4rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 12px rgba(18, 51, 36, 0.01);
+    }
+    .quiz-progress-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+    .quiz-progress-text .quiz-score-live {
+      color: var(--amber);
+    }
+    .quiz-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #edf2ef;
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid rgba(18, 51, 36, 0.05);
+    }
+    .quiz-progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #2e7d32, #66bb6a);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 單題卡片過渡動畫 */
+    .question-card {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      pointer-events: none;
+    }
+    .question-card.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    .question-card.exit {
+      opacity: 0;
+      transform: translateX(-30px);
+      pointer-events: none;
+    }
+
+    /* 下一題按鈕 */
+    .next-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      background: var(--dark);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 0.85rem 1.6rem;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 16px rgba(18, 51, 36, 0.1);
+    }
+    .next-btn:hover {
+      background: var(--deep);
+      transform: translateX(3px);
+      box-shadow: 0 8px 22px rgba(18, 51, 36, 0.18);
+    }
+    .next-btn .arrow {
+      transition: transform 0.25s ease;
+    }
+    .next-btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* 計分面板升級 — 淡入彈出動畫 */
+    .score-panel.pop-in {
+      animation: scorePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes scorePop {
+      0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .score-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      font-family: monospace;
+    }
+    .score-label {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* 綠葉飄落慶祝動畫 */
+    .leaf-confetti {
+      position: fixed;
+      top: -30px;
+      font-size: 1.6rem;
+      pointer-events: none;
+      z-index: 999;
+      animation: leafFall var(--fall-duration) linear forwards;
+    }
+    @keyframes leafFall {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(calc(100vh + 50px)) rotate(var(--leaf-rotation)) scale(0.6);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -371,15 +820,123 @@
       </div>
     </section>
 
+    <!-- 光合作用模擬實驗室 (Interactive Simulation Lab) HTML 結構 -->
+    <section class="simulation">
+      <div class="section-title">光合作用模擬實驗室</div>
+      <div class="sim-panel">
+        <!-- 控制面板 -->
+        <div class="sim-controls">
+          <div class="control-group">
+            <label for="lightSlider">
+              <span>☀️ 光照強度</span>
+              <span id="lightVal">50%</span>
+            </label>
+            <input type="range" id="lightSlider" class="sim-slider" min="0" max="100" value="50">
+          </div>
+          
+          <div class="control-group">
+            <label for="co2Slider">
+              <span>💨 二氧化碳濃度</span>
+              <span id="co2Val">50%</span>
+            </label>
+            <input type="range" id="co2Slider" class="sim-slider" min="0" max="100" value="50">
+          </div>
+          
+          <div class="control-group" style="display: flex; gap: 0.6rem; flex-direction: column;">
+            <button id="waterBtn" class="water-btn">
+              <span>💧 灌溉水分</span>
+            </button>
+          </div>
+          
+          <div class="action-btn-group">
+            <button id="startSimBtn" class="action-btn start-btn">
+              <span>▶ 啟動光合作用</span>
+            </button>
+            <button id="stopSimBtn" class="action-btn stop-btn" disabled>
+              <span>⏹ 暫停反應</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- 反應室與數據面板 -->
+        <div class="sim-display">
+          <!-- 反應視覺化 -->
+          <div id="simChamber" class="chamber">
+            <div id="sunRay" class="sun-ray"></div>
+            <div id="chamberLeaf" class="chamber-leaf">🍃</div>
+          </div>
+          
+          <!-- 數據面板 -->
+          <div class="dashboard">
+            <div class="dash-item">
+              <div class="dash-label">
+                <span>💧 儲存水量</span>
+                <span id="waterText">100%</span>
+              </div>
+              <div class="meter-container">
+                <div id="waterMeter" class="meter-fill water-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+            
+            <div class="dash-item">
+              <div class="dash-label">
+                <span>🔋 ATP & NADPH 能量儲存</span>
+                <span id="energyText">0%</span>
+              </div>
+              <div class="meter-container">
+                <div id="energyMeter" class="meter-fill atp-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            
+            <div class="counters">
+              <div class="counter-card">
+                <div id="o2Counter" class="counter-val">0</div>
+                <div class="counter-lbl">💨 O₂ 釋放量</div>
+              </div>
+              <div class="counter-card">
+                <div id="glucoseCounter" class="counter-val">0</div>
+                <div class="counter-lbl">🍬 葡萄糖合成量</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 科學小提示 -->
+        <div class="insight-panel">
+          <div class="insight-icon">💡</div>
+          <div id="insightText" class="insight-text">
+            <strong>實驗室已準備就緒！</strong>請調整滑桿，並點擊下方<strong>「啟動光合作用」</strong>按鈕開始觀察。
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="quiz">
       <div class="section-title">小測驗</div>
-      <div class="questions" id="quizContainer"></div>
+
+      <!-- 答題進度條 -->
+      <div class="quiz-progress" id="quizProgress">
+        <div class="quiz-progress-text">
+          <span>進度：第 <span id="currentQNum">1</span> 題 / 共 <span id="totalQNum">5</span> 題</span>
+          <span class="quiz-score-live" id="quizScoreLive">目前得分：0</span>
+        </div>
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quizProgressFill"></div>
+        </div>
+      </div>
+
+      <!-- 單題卡片容器 -->
+      <div id="quizContainer" class="questions"></div>
+
+      <!-- 計分面板 (重構為跑數版本) -->
       <div class="score-panel" id="scorePanel" style="display:none;">
         <div>
-          <strong id="scoreText"></strong>
-          <div id="encouragement"></div>
+          <div class="score-number" id="scoreNumber">0</div>
+          <div class="score-label">答對題數 / <span id="totalForScore">5</span> 題</div>
+          <strong id="scoreText" style="display:none;"></strong>
+          <div id="encouragement" style="margin-top: 0.6rem; line-height: 1.6;"></div>
         </div>
-        <button id="retryButton">再試一次</button>
+        <button id="retryButton">🔄 再試一次</button>
       </div>
     </section>
   </main>
@@ -456,6 +1013,16 @@
     const encouragement = document.getElementById('encouragement');
     const retryButton = document.getElementById('retryButton');
 
+    // 新增：進度條與計分面板元素
+    const quizProgress = document.getElementById('quizProgress');
+    const currentQNum = document.getElementById('currentQNum');
+    const totalQNum = document.getElementById('totalQNum');
+    const quizScoreLive = document.getElementById('quizScoreLive');
+    const quizProgressFill = document.getElementById('quizProgressFill');
+    const scoreNumber = document.getElementById('scoreNumber');
+    const totalForScore = document.getElementById('totalForScore');
+
+    // 題庫資料
     const questions = [
       {
         question: '光反應最主要發生在植物哪個結構？',
@@ -489,64 +1056,459 @@
       }
     ];
 
-    let answeredCount = 0;
-    let score = 0;
+    // 遊戲化測驗狀態
+    let currentQuestionIndex = 0; // 目前作答的題目索引
+    let score = 0;                // 累計得分
 
+    // 初始化進度條的總題數標示
+    totalQNum.textContent = questions.length;
+    totalForScore.textContent = questions.length;
+
+    // ====== 建立測驗（重設所有狀態） ======
     function createQuiz() {
       quizContainer.innerHTML = '';
-      answeredCount = 0;
+      currentQuestionIndex = 0;
       score = 0;
+
+      // 重設分數面板
       scorePanel.style.display = 'none';
+      scorePanel.classList.remove('pop-in');
+      scoreNumber.textContent = '0';
       encouragement.textContent = '';
 
-      questions.forEach((item, index) => {
-        const questionEl = document.createElement('div');
-        questionEl.className = 'question';
-        questionEl.innerHTML = `<h5>${index + 1}. ${item.question}</h5><div class="options"></div>`;
-        const optionsEl = questionEl.querySelector('.options');
+      // 重設進度條
+      quizProgress.style.display = '';
+      updateProgress();
 
-        item.choices.forEach((choice, choiceIndex) => {
-          const option = document.createElement('button');
-          option.type = 'button';
-          option.className = 'option';
-          option.innerHTML = `<span>${choice}</span><small></small>`;
-          option.addEventListener('click', () => selectAnswer(index, choiceIndex, option, questionEl, item));
-          optionsEl.appendChild(option);
+      // 渲染第一題
+      renderCurrentQuestion();
+    }
+
+    // ====== 更新進度條與即時分數顯示 ======
+    function updateProgress() {
+      currentQNum.textContent = currentQuestionIndex + 1;
+      quizScoreLive.textContent = `目前得分：${score}`;
+      // 進度條寬度 = (已作答題數 / 總題數) * 100%
+      const progressPercent = ((currentQuestionIndex) / questions.length) * 100;
+      quizProgressFill.style.width = progressPercent + '%';
+    }
+
+    // ====== 渲染當前題目卡片 ======
+    function renderCurrentQuestion() {
+      const item = questions[currentQuestionIndex];
+      const index = currentQuestionIndex;
+
+      // 清空容器
+      quizContainer.innerHTML = '';
+
+      // 建立題目卡片（初始為隱藏狀態）
+      const questionEl = document.createElement('div');
+      questionEl.className = 'question question-card';
+      questionEl.innerHTML = `<h5>${index + 1}. ${item.question}</h5><div class="options"></div>`;
+      const optionsEl = questionEl.querySelector('.options');
+
+      // 建立選項按鈕
+      item.choices.forEach((choice, choiceIndex) => {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'option';
+        option.innerHTML = `<span>${choice}</span><small></small>`;
+        option.addEventListener('click', () => selectAnswer(choiceIndex, option, questionEl, item));
+        optionsEl.appendChild(option);
+      });
+
+      quizContainer.appendChild(questionEl);
+
+      // 使用 requestAnimationFrame 確保 DOM 已渲染，再觸發滑入動畫
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          questionEl.classList.add('active');
         });
-
-        quizContainer.appendChild(questionEl);
       });
     }
 
-    function selectAnswer(questionIndex, choiceIndex, optionEl, questionEl, item) {
+    // ====== 選擇答案邏輯 ======
+    function selectAnswer(choiceIndex, optionEl, questionEl, item) {
+      // 防止重複作答
       if (questionEl.dataset.answered) return;
       questionEl.dataset.answered = 'true';
-      answeredCount++;
+
       const isCorrect = choiceIndex === item.answer;
-      if (isCorrect) { score++; optionEl.classList.add('correct'); }
-      else { optionEl.classList.add('wrong'); }
+      if (isCorrect) {
+        score++;
+        optionEl.classList.add('correct');
+      } else {
+        optionEl.classList.add('wrong');
+      }
       optionEl.classList.add('selected');
+
+      // 鎖定所有選項，並標示正確答案
       const options = questionEl.querySelectorAll('.option');
       options.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === item.answer) btn.classList.add('correct');
       });
+
+      // 顯示解析文字
       const feedback = document.createElement('div');
       feedback.className = 'feedback';
-      feedback.textContent = isCorrect ? `答對！${item.explanation}` : `答錯。${item.explanation}`;
+      feedback.textContent = isCorrect ? `✅ 答對！${item.explanation}` : `❌ 答錯。${item.explanation}`;
       questionEl.appendChild(feedback);
-      if (answeredCount === questions.length) showScore();
+
+      // 更新即時分數
+      quizScoreLive.textContent = `目前得分：${score}`;
+
+      // 建立「下一題」或「查看結果」按鈕
+      const isLastQuestion = currentQuestionIndex === questions.length - 1;
+      const nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'next-btn';
+      nextBtn.innerHTML = isLastQuestion
+        ? '🏆 查看測驗結果 <span class="arrow">➔</span>'
+        : '下一題 <span class="arrow">➔</span>';
+
+      nextBtn.addEventListener('click', () => {
+        if (isLastQuestion) {
+          // 最後一題 → 切換至計分面板
+          transitionToScore(questionEl);
+        } else {
+          // 切換至下一題
+          nextQuestion(questionEl);
+        }
+      });
+
+      questionEl.appendChild(nextBtn);
     }
 
-    function showScore() {
-      scorePanel.style.display = 'flex';
-      scoreText.textContent = `得分：${score} / ${questions.length}`;
-      const rate = score / questions.length;
-      encouragement.textContent = rate >= 0.8 ? '太棒了！你已經掌握光合作用的關鍵步驟。' : rate >= 0.6 ? '很好！再複習一次可以更穩固概念。' : '加油！再重新作答一次，你會更清楚光合作用流程。';
+    // ====== 切換至下一題（帶動畫） ======
+    function nextQuestion(currentCard) {
+      // 先觸發當前卡片的退場動畫（向左滑出）
+      currentCard.classList.remove('active');
+      currentCard.classList.add('exit');
+
+      // 動畫結束後渲染下一題
+      setTimeout(() => {
+        currentQuestionIndex++;
+        updateProgress();
+        renderCurrentQuestion();
+      }, 400); // 與 CSS transition 時間一致
+    }
+
+    // ====== 切換至計分面板（帶動畫） ======
+    function transitionToScore(currentCard) {
+      // 退場當前卡片
+      currentCard.classList.remove('active');
+      currentCard.classList.add('exit');
+
+      // 更新進度條到 100%
+      quizProgressFill.style.width = '100%';
+
+      setTimeout(() => {
+        quizContainer.innerHTML = ''; // 清空題目區
+
+        // 隱藏進度條
+        quizProgress.style.display = 'none';
+
+        // 顯示計分面板並觸發彈出動畫
+        scorePanel.style.display = 'flex';
+        scorePanel.classList.add('pop-in');
+
+        // 啟動分數跑數動畫（從 0 跑到實際得分）
+        animateScoreCountUp(score);
+
+        // 設定鼓勵文字
+        const rate = score / questions.length;
+        encouragement.textContent = rate >= 0.8
+          ? '🌟 太棒了！你已經掌握光合作用的關鍵步驟。'
+          : rate >= 0.6
+            ? '👍 很好！再複習一次可以更穩固概念。'
+            : '💪 加油！再重新作答一次，你會更清楚光合作用流程。';
+
+        // 高分慶祝：綠葉飄落動畫！
+        if (rate >= 0.8) {
+          setTimeout(() => startLeafCelebration(), 600);
+        }
+      }, 450);
+    }
+
+    // ====== 分數跑數動畫 ======
+    function animateScoreCountUp(targetScore) {
+      let current = 0;
+      scoreNumber.textContent = '0';
+
+      // 若得分為 0 則跳過跑數動畫
+      if (targetScore === 0) return;
+
+      const interval = setInterval(() => {
+        current++;
+        scoreNumber.textContent = current;
+        if (current >= targetScore) {
+          clearInterval(interval);
+        }
+      }, 120); // 每 120 毫秒加 1，控制跑數節奏
+    }
+
+    // ====== 綠葉飄落慶祝動畫 ======
+    function startLeafCelebration() {
+      const leafEmojis = ['🍃', '🌿', '🍀', '☘️', '🌱'];
+      const leafCount = 25; // 撒落 25 片綠葉
+
+      for (let i = 0; i < leafCount; i++) {
+        // 為每片葉子設置隨機延遲，營造自然飄落效果
+        setTimeout(() => {
+          const leaf = document.createElement('div');
+          leaf.className = 'leaf-confetti';
+          leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+
+          // 隨機起始水平位置
+          leaf.style.left = Math.random() * 100 + 'vw';
+
+          // 隨機掉落速度
+          const fallDuration = (Math.random() * 2 + 2.5) + 's';
+          leaf.style.setProperty('--fall-duration', fallDuration);
+
+          // 隨機旋轉角度
+          const rotation = (Math.random() * 720 - 360) + 'deg';
+          leaf.style.setProperty('--leaf-rotation', rotation);
+
+          // 隨機大小
+          leaf.style.fontSize = (Math.random() * 1 + 1.2) + 'rem';
+
+          document.body.appendChild(leaf);
+
+          // 動畫結束後自動移除 DOM 元素
+          const durationMs = parseFloat(fallDuration) * 1000;
+          setTimeout(() => leaf.remove(), durationMs + 100);
+        }, i * 80); // 每片葉子間隔 80 毫秒撒落
+      }
     }
 
     retryButton.addEventListener('click', createQuiz);
     createQuiz();
+
+    // ==========================================================================
+    // 光合作用模擬實驗室 (Photosynthesis Simulation Lab) 邏輯
+    // ==========================================================================
+    const lightSlider = document.getElementById('lightSlider');
+    const lightVal = document.getElementById('lightVal');
+    const co2Slider = document.getElementById('co2Slider');
+    const co2Val = document.getElementById('co2Val');
+    const waterBtn = document.getElementById('waterBtn');
+    
+    const startSimBtn = document.getElementById('startSimBtn');
+    const stopSimBtn = document.getElementById('stopSimBtn');
+    
+    const simChamber = document.getElementById('simChamber');
+    const sunRay = document.getElementById('sunRay');
+    const chamberLeaf = document.getElementById('chamberLeaf');
+    
+    const waterMeter = document.getElementById('waterMeter');
+    const waterText = document.getElementById('waterText');
+    const energyMeter = document.getElementById('energyMeter');
+    const energyText = document.getElementById('energyText');
+    
+    const o2Counter = document.getElementById('o2Counter');
+    const glucoseCounter = document.getElementById('glucoseCounter');
+    const insightText = document.getElementById('insightText');
+    
+    // 實驗室運行狀態變數
+    let simInterval = null;
+    let waterLevel = 100; // 0% - 100%
+    let energyLevel = 0;   // ATP/NADPH 0% - 100%
+    let o2Released = 0;    // 釋放量計數
+    let glucoseSynthesized = 0; // 合成量計數
+    let bubbleTimer = 0;   // 控制泡泡生成頻率
+    
+    // 滑桿互動數值更新
+    function updateLightDisplay() {
+      const val = lightSlider.value;
+      lightVal.textContent = val + '%';
+      // 根據光強調整實驗室背景的陽光亮度
+      sunRay.style.opacity = val / 100 * 0.9;
+    }
+    
+    function updateCo2Display() {
+      co2Val.textContent = co2Slider.value + '%';
+    }
+    
+    lightSlider.addEventListener('input', updateLightDisplay);
+    co2Slider.addEventListener('input', updateCo2Display);
+    
+    // 初始呼叫一次
+    updateLightDisplay();
+    updateCo2Display();
+    
+    // 灌溉水分邏輯
+    waterBtn.addEventListener('click', () => {
+      waterLevel = 100;
+      waterMeter.style.width = '100%';
+      waterText.textContent = '100%';
+      
+      // 觸發灌溉的葉片縮放微動畫
+      chamberLeaf.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        if (simInterval) {
+          chamberLeaf.style.transform = '';
+        } else {
+          chamberLeaf.style.transform = 'scale(1)';
+        }
+      }, 300);
+      
+      updateInsight('💧 灌溉完成！水分已補滿至 100%。葉綠體已獲得充足的電子與質子供應！');
+    });
+    
+    // 更新觀察提示面板
+    function updateInsight(text, icon = '💡') {
+      const insightPanel = document.querySelector('.insight-panel');
+      insightPanel.querySelector('.insight-icon').textContent = icon;
+      insightText.innerHTML = text;
+    }
+    
+    // 隨機在反應室生成氧氣氣泡動畫
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = 'O₂';
+      
+      // 隨機大小與左右漂移寬度
+      const size = Math.floor(Math.random() * 12) + 16;
+      bubble.style.width = size + 'px';
+      bubble.style.height = size + 'px';
+      bubble.style.fontSize = (size * 0.45) + 'px';
+      
+      const left = Math.floor(Math.random() * 80) + 10;
+      bubble.style.left = left + '%';
+      
+      const drift = (Math.random() * 60 - 30) + 'px';
+      bubble.style.setProperty('--drift', drift);
+      
+      simChamber.appendChild(bubble);
+      
+      // 動畫結束後自動移除元素
+      setTimeout(() => {
+        bubble.remove();
+      }, 3000);
+    }
+    
+    // 啟動反應
+    startSimBtn.addEventListener('click', () => {
+      if (simInterval) return;
+      
+      const light = parseInt(lightSlider.value);
+      
+      // 防呆：如果完全無光
+      if (light === 0) {
+        updateInsight('⚠️ <strong>警告：</strong>光強為 0%！沒有光能，葉綠素無法被激發，光反應無法進行！請先調高光強。', '⚠️');
+        return;
+      }
+      
+      // 防呆：如果完全無水
+      if (waterLevel <= 0) {
+        updateInsight('⚠️ <strong>警告：</strong>儲存水量為 0%！缺乏水分子作為電子來源，無法進行光解水！請先點擊<strong>「灌溉水分」</strong>。', '⚠️');
+        return;
+      }
+      
+      // 調整按鈕與面板狀態
+      startSimBtn.disabled = true;
+      stopSimBtn.disabled = false;
+      lightSlider.disabled = true;
+      co2Slider.disabled = true;
+      simChamber.classList.add('active');
+      
+      updateInsight('⚙️ <strong>光合作用進行中...</strong> 正在吸收光能與二氧化碳，光反應與卡爾文循環運作中！', '⚙️');
+      
+      // 啟動 100ms 一次的反應循環時脈
+      simInterval = setInterval(photosynthesisLoop, 100);
+    });
+    
+    // 暫停反應
+    stopSimBtn.addEventListener('click', () => {
+      pauseSimulation('⏸ <strong>反應已暫停。</strong>隨時可以點擊「啟動」繼續實驗。');
+    });
+    
+    function pauseSimulation(message = '反應暫停。', icon = '💡') {
+      if (!simInterval) return;
+      clearInterval(simInterval);
+      simInterval = null;
+      
+      startSimBtn.disabled = false;
+      stopSimBtn.disabled = true;
+      lightSlider.disabled = false;
+      co2Slider.disabled = false;
+      simChamber.classList.remove('active');
+      chamberLeaf.style.transform = '';
+      
+      updateInsight(message, icon);
+    }
+    
+    // 核心光合作用反應迴圈
+    function photosynthesisLoop() {
+      const light = parseInt(lightSlider.value);
+      const co2 = parseInt(co2Slider.value);
+      
+      // 1. 光反應 (Light Reaction)
+      // 速率取決於：光照強度與是否有水
+      let lightReactionRate = 0;
+      if (waterLevel > 0 && light > 0) {
+        lightReactionRate = (light / 100) * 1.5; // 計算光反應速率
+        
+        // 消耗水分子 (光解水)
+        waterLevel = Math.max(0, waterLevel - (lightReactionRate * 0.15));
+        waterMeter.style.width = waterLevel + '%';
+        waterText.textContent = Math.floor(waterLevel) + '%';
+        
+        // 釋放氧氣 (O₂ 是光反應的副產物)
+        o2Released += lightReactionRate * 0.08;
+        o2Counter.textContent = Math.floor(o2Released);
+        
+        // 產生 ATP 與 NADPH (能量積累)
+        energyLevel = Math.min(100, energyLevel + (lightReactionRate * 0.8));
+        energyMeter.style.width = energyLevel + '%';
+        energyText.textContent = Math.floor(energyLevel) + '%';
+        
+        // 生成氣泡特效
+        bubbleTimer += lightReactionRate;
+        if (bubbleTimer >= 3) {
+          createBubble();
+          bubbleTimer = 0;
+        }
+      }
+      
+      // 2. 卡爾文循環 (Calvin Cycle / 碳反應)
+      // 速率取決於：二氧化碳濃度與是否有累積能量 (ATP/NADPH)
+      let calvinCycleRate = 0;
+      if (co2 > 0 && energyLevel > 0) {
+        // 卡爾文循環消耗累積的能量與二氧化碳
+        calvinCycleRate = Math.min(energyLevel * 0.1, (co2 / 100) * 1.2);
+        
+        // 消耗能量條 (消耗 ATP/NADPH)
+        energyLevel = Math.max(0, energyLevel - (calvinCycleRate * 0.9));
+        energyMeter.style.width = energyLevel + '%';
+        energyText.textContent = Math.floor(energyLevel) + '%';
+        
+        // 合成葡萄糖 (最終產物)
+        glucoseSynthesized += calvinCycleRate * 0.05;
+        glucoseCounter.textContent = Math.floor(glucoseSynthesized * 10) / 10;
+      }
+      
+      // 3. 極限狀況判斷與反饋
+      // 水分用光
+      if (waterLevel <= 0) {
+        pauseSimulation('⚠️ <strong>反應停止：水分已消耗殆盡！</strong><br>光反應因缺乏電子與質子來源而中斷。請點擊「灌溉水分」重新補充原料！', '⚠️');
+        return;
+      }
+      
+      // 如果光反應順暢，但二氧化碳為 0% (碳反應卡死)
+      if (light > 0 && co2 === 0 && energyLevel >= 98) {
+        updateInsight('⚠️ <strong>警報：缺乏 CO₂！</strong><br>光反應已產生飽和的 ATP 與 NADPH，但卡爾文循環因缺乏二氧化碳而無法進行！<strong>無法合成葡萄糖！</strong>請拉高二氧化碳滑桿。', '⚠️');
+      }
+      
+      // 當順暢合成葡萄糖時的動態分析
+      if (calvinCycleRate > 0 && lightReactionRate > 0) {
+        const efficiency = Math.min(100, Math.floor((lightReactionRate + calvinCycleRate) * 45));
+        updateInsight(`✅ <strong>運作效率高 (${efficiency}%)</strong><br>光反應源源不絕光解水釋放 O₂，產生的 ATP 與 NADPH 隨即供卡爾文循環固定 CO₂，穩定合成葡萄糖！`, '✅');
+      }
+    }
   </script>
 </body>
 </html>
