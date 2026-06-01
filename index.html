@@ -781,6 +781,542 @@
         opacity: 0;
       }
     }
+
+    /* ==========================================================================
+       遊戲化與高互動小測驗新增樣式
+       ========================================================================== */
+    
+    /* 生命值樣式 */
+    .lives-container {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .heart {
+      font-size: 1.4rem;
+      color: #e57373;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.4), opacity 0.3s ease;
+      display: inline-block;
+      text-shadow: 0 2px 5px rgba(229, 115, 115, 0.2);
+    }
+    .heart.broken {
+      transform: scale(0) rotate(45deg);
+      opacity: 0;
+    }
+
+    /* 答題倒數計時條 */
+    .timer-container {
+      width: 100%;
+      height: 6px;
+      background: #edf2ef;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 0.8rem;
+      border: 1px solid rgba(18, 51, 36, 0.05);
+      position: relative;
+    }
+    .timer-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #2e7d32, #66bb6a);
+      transition: width 0.1s linear, background 0.3s ease;
+      border-radius: 99px;
+    }
+    .timer-fill.warning {
+      background: linear-gradient(90deg, #ffb74d, #ffa726);
+    }
+    .timer-fill.danger {
+      background: linear-gradient(90deg, #e57373, #ef5350);
+      animation: pulse-red 0.5s infinite alternate;
+    }
+    @keyframes pulse-red {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    /* 答錯震動動畫 */
+    .shake {
+      animation: shake-anim 0.35s ease-in-out;
+    }
+    @keyframes shake-anim {
+      0%, 100% { transform: translateX(0); }
+      15%, 45%, 75% { transform: translateX(-8px); }
+      30%, 60%, 90% { transform: translateX(8px); }
+    }
+
+    /* 答對拋射粒子特效 */
+    .particle {
+      position: absolute;
+      pointer-events: none;
+      font-size: 1.2rem;
+      z-index: 100;
+      animation: particle-burst-anim var(--p-duration) cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+    @keyframes particle-burst-anim {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--p-dx), var(--p-dy)) scale(0.3) rotate(var(--p-rotate));
+        opacity: 0;
+      }
+    }
+
+    /* 互動分類題樣式 */
+    .classify-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .draggable-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      padding: 1.2rem;
+      border-radius: 20px;
+      min-height: 80px;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .draggable-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(18, 51, 36, 0.02);
+      transition: all 0.25s ease;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+    }
+    .draggable-item:hover {
+      border-color: var(--amber);
+      background: #fffbf5;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(181, 122, 19, 0.1);
+    }
+    .draggable-item.placed {
+      opacity: 0.35;
+      pointer-events: none;
+      background: #edf2ef;
+    }
+    .baskets-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 640px) {
+      .baskets-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+    .basket {
+      background: #edf5f1;
+      border: 2px dashed rgba(18, 51, 36, 0.12);
+      border-radius: 24px;
+      padding: 1.2rem;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 6px rgba(18, 51, 36, 0.02);
+    }
+    .basket.hovered {
+      border-color: var(--amber);
+      background: #fffbf5;
+      box-shadow: 0 8px 20px rgba(181, 122, 19, 0.05);
+    }
+    .basket.pulse {
+      animation: basket-pulse-anim 0.3s ease;
+    }
+    @keyframes basket-pulse-anim {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .basket-title {
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 1px solid rgba(18, 51, 36, 0.08);
+      padding-bottom: 0.5rem;
+    }
+    .basket-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-content: flex-start;
+      flex-grow: 1;
+    }
+    .basket-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      animation: pop-in-anim 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.2s ease;
+    }
+    .basket-item:hover {
+      background: #fdf2f2;
+      border-color: #c62828;
+      color: #c62828;
+    }
+    @keyframes pop-in-anim {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* 點選分類時的彈出小選單 */
+    .quick-classify-menu {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(18, 51, 36, 0.15);
+      border-radius: 14px;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      z-index: 10;
+      animation: pop-in-anim 0.2s ease;
+    }
+    .quick-classify-btn {
+      border: none;
+      background: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+    }
+    .quick-classify-btn:hover {
+      background: #edf5f1;
+      color: var(--dark);
+    }
+
+    /* 步驟排序題樣式 */
+    .order-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .order-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 4px 10px rgba(18, 51, 36, 0.01);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+    }
+    .order-item:hover {
+      border-color: var(--amber);
+      background: #fffbf5;
+    }
+    .order-item-content {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .order-index {
+      background: #edf2ef;
+      color: var(--dark);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    .order-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .order-btn {
+      background: #edf2ef;
+      border: 1px solid rgba(18, 51, 36, 0.05);
+      color: var(--dark);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    .order-btn:hover {
+      background: var(--amber);
+      color: #ffffff;
+      border-color: var(--amber);
+    }
+    .order-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      background: #edf2ef !important;
+      color: var(--text-muted) !important;
+      border-color: rgba(18, 51, 36, 0.05) !important;
+    }
+
+    /* 提交驗證按鈕 */
+    .submit-quiz-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--dark);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 0.85rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 16px rgba(18, 51, 36, 0.1);
+      margin-top: 1rem;
+      width: 100%;
+    }
+    .submit-quiz-btn:hover:not(:disabled) {
+      background: var(--deep);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(18, 51, 36, 0.18);
+    }
+    .submit-quiz-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* 玻璃擬態成就徽章樣式 */
+    .badge-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1.5rem 0;
+      perspective: 1000px;
+      width: 100%;
+    }
+    .badge-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 20px 40px rgba(18, 51, 36, 0.08),
+                  inset 0 0 20px rgba(255, 255, 255, 0.5);
+      border-radius: 28px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      animation: badge-float-anim 4s ease-in-out infinite, badge-glow-anim 3s linear infinite alternate;
+      max-width: 340px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    @keyframes badge-float-anim {
+      0%, 100% { transform: translateY(0px) rotateY(0deg); }
+      50% { transform: translateY(-10px) rotateY(4deg); }
+    }
+    .badge-icon {
+      font-size: 3.8rem;
+      filter: drop-shadow(0 8px 16px rgba(181, 122, 19, 0.2));
+      animation: spin-slow-anim 16s linear infinite;
+    }
+    @keyframes spin-slow-anim {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .badge-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-top: 0.4rem;
+    }
+    .badge-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* 針對不同等級徽章的客製化樣式 */
+    .badge-master {
+      border-color: rgba(255, 215, 0, 0.5);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 248, 220, 0.75) 100%);
+    }
+    .badge-guardian {
+      border-color: rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(232, 245, 233, 0.75) 100%);
+    }
+    .badge-sprout {
+      border-color: rgba(139, 195, 74, 0.3);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(241, 248, 233, 0.75) 100%);
+    }
+    .badge-shade {
+      border-color: rgba(144, 164, 174, 0.3);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(236, 239, 241, 0.75) 100%);
+    }
+
+    @keyframes badge-glow-anim {
+      0% { box-shadow: 0 20px 40px rgba(18, 51, 36, 0.08), inset 0 0 20px rgba(255, 255, 255, 0.5); }
+      100% { box-shadow: 0 20px 45px rgba(46, 125, 50, 0.15), inset 0 0 25px rgba(46, 125, 50, 0.15); }
+    }
+
+    /* 3D 翻轉卡片複習專區樣式 */
+    .review-section {
+      margin-top: 2rem;
+      border-top: 1px solid rgba(18, 51, 36, 0.08);
+      padding-top: 1.8rem;
+      width: 100%;
+    }
+    .review-section-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      color: var(--dark);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+    .flashcard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .flashcard-wrapper {
+      perspective: 1000px;
+      height: 220px;
+      cursor: pointer;
+    }
+    .flashcard {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    .flashcard-front, .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: 0 8px 24px rgba(18, 51, 36, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .flashcard-front {
+      background: #fffdfd;
+      border: 1px solid rgba(198, 40, 40, 0.25);
+      color: var(--text);
+    }
+    .flashcard-front::before {
+      content: '❌ 您的解答有誤';
+      font-size: 0.78rem;
+      color: #c62828;
+      background: #fdf2f2;
+      padding: 0.25rem 0.6rem;
+      border-radius: 99px;
+      align-self: flex-start;
+      font-weight: 700;
+    }
+    .flashcard-back {
+      background: #fbfdfc;
+      border: 1px solid rgba(46, 125, 50, 0.25);
+      color: var(--text);
+      transform: rotateY(180deg);
+    }
+    .flashcard-back::before {
+      content: '✅ 科學合理解釋';
+      font-size: 0.78rem;
+      color: #2e7d32;
+      background: #edf5f1;
+      padding: 0.25rem 0.6rem;
+      border-radius: 99px;
+      align-self: flex-start;
+      font-weight: 700;
+    }
+    .flashcard-q {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 0.6rem 0;
+      line-height: 1.5;
+    }
+    .flashcard-ans {
+      font-size: 0.88rem;
+      margin: 0.5rem 0;
+      line-height: 1.6;
+      color: var(--text-muted);
+      overflow-y: auto;
+      max-height: 110px;
+    }
+    .flashcard-ans strong {
+      color: var(--dark);
+    }
+    .flashcard-hint {
+      font-size: 0.76rem;
+      color: var(--amber);
+      text-align: right;
+      font-weight: 500;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.2rem;
+    }
   </style>
 </head>
 <body>
@@ -914,7 +1450,7 @@
     <section class="quiz">
       <div class="section-title">小測驗</div>
 
-      <!-- 答題進度條 -->
+      <!-- 答題進度與狀態列 -->
       <div class="quiz-progress" id="quizProgress">
         <div class="quiz-progress-text">
           <span>進度：第 <span id="currentQNum">1</span> 題 / 共 <span id="totalQNum">5</span> 題</span>
@@ -923,20 +1459,36 @@
         <div class="quiz-progress-bar">
           <div class="quiz-progress-fill" id="quizProgressFill"></div>
         </div>
+        
+        <!-- 限時倒數計時條 -->
+        <div class="timer-container">
+          <div id="timerFill" class="timer-fill" style="width: 100%;"></div>
+        </div>
       </div>
 
-      <!-- 單題卡片容器 -->
+      <!-- 單題卡片容器 (支援單選、分類、排序題型動態生成) -->
       <div id="quizContainer" class="questions"></div>
 
-      <!-- 計分面板 (重構為跑數版本) -->
-      <div class="score-panel" id="scorePanel" style="display:none;">
-        <div>
-          <div class="score-number" id="scoreNumber">0</div>
-          <div class="score-label">答對題數 / <span id="totalForScore">5</span> 題</div>
-          <strong id="scoreText" style="display:none;"></strong>
-          <div id="encouragement" style="margin-top: 0.6rem; line-height: 1.6;"></div>
+      <!-- 計分與成就回饋面板 -->
+      <div class="score-panel" id="scorePanel" style="display:none; flex-direction: column; align-items: stretch; gap: 1.8rem; width: 100%;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem;">
+          <div>
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-label">答對題數 / <span id="totalForScore">5</span> 題</div>
+            <strong id="scoreText" style="display:none;"></strong>
+            <div id="encouragement" style="margin-top: 0.6rem; line-height: 1.6; max-width: 500px;"></div>
+          </div>
+          <button id="retryButton">🔄 再試一次</button>
         </div>
-        <button id="retryButton">🔄 再試一次</button>
+        
+        <!-- 玻璃擬態徽章展示掛載點 -->
+        <div id="badgeAnchor" style="width: 100%; display: flex; justify-content: center;"></div>
+        
+        <!-- 3D 翻轉卡片錯題複習專區 -->
+        <div id="reviewAnchor" class="review-section" style="display: none;">
+          <div class="review-section-title">🔍 錯題 3D 翻轉複習（點擊卡片可翻看科學解析）</div>
+          <div class="flashcard-grid" id="flashcardGrid"></div>
+        </div>
       </div>
     </section>
   </main>
@@ -1013,7 +1565,7 @@
     const encouragement = document.getElementById('encouragement');
     const retryButton = document.getElementById('retryButton');
 
-    // 新增：進度條與計分面板元素
+    // 取得小測驗的 DOM 元素
     const quizProgress = document.getElementById('quizProgress');
     const currentQNum = document.getElementById('currentQNum');
     const totalQNum = document.getElementById('totalQNum');
@@ -1022,78 +1574,368 @@
     const scoreNumber = document.getElementById('scoreNumber');
     const totalForScore = document.getElementById('totalForScore');
 
-    // 題庫資料
-    const questions = [
+    // ==========================================================================
+    // 大題庫資料 (MASTER_QUESTIONS)：包含 14 道單選、分類與排序題型
+    // 每次重新測驗時，系統會從中隨機抽取 6 道題目，使複習充滿新鮮感！
+    // ==========================================================================
+    const MASTER_QUESTIONS = [
       {
+        type: 'choice',
         question: '光反應最主要發生在植物哪個結構？',
         choices: ['葉綠體基質', '類囊體膜', '細胞質基質', '葉肉細胞細胞壁'],
         answer: 1,
         explanation: '光反應發生在葉綠體的類囊體膜上，葉綠素嵌入於此膜中吸收光能。'
       },
       {
+        type: 'choice',
         question: '下列哪一個是光合作用的總反應式？',
         choices: ['6CO₂ + 6H₂O + 光能 → C₆H₁₂O₆ + 6O₂', 'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O', '6CO₂ + 6O₂ → C₆H₁₂O₆ + 6H₂O', '6H₂O + 6O₂ → C₆H₁₂O₆ + 6CO₂'],
         answer: 0,
         explanation: '正確的光合作用總反應式是用二氧化碳、水和光能合成葡萄糖並釋放氧氣。'
       },
       {
-        question: '卡爾文循環中最先被固定的物質是？',
-        choices: ['H₂O', 'O₂', 'CO₂', 'G3P'],
-        answer: 2,
-        explanation: '卡爾文循環的第一步是將 CO₂ 固定到有機分子上，這個步驟由 RuBisCO 催化。'
+        type: 'classify',
+        question: '請將下列物質與能量歸類到正確的光合作用階段：',
+        items: [
+          { name: '光能 ☀️', category: 'light' },
+          { name: '水 (H₂O) 💧', category: 'light' },
+          { name: 'CO₂ 💨', category: 'calvin' },
+          { name: '氧氣 (O₂) 🧪', category: 'light' },
+          { name: '葡萄糖 🍬', category: 'calvin' },
+          { name: 'ATP & NADPH 🔋', category: 'both' }
+        ],
+        explanation: '光反應利用光能分解水，釋放氧氣並產生 ATP/NADPH；卡爾文循環則消耗 ATP/NADPH 來固定二氧化碳並合成葡萄糖。'
       },
       {
-        question: '光反應直接產生下列哪一項？',
-        choices: ['葡萄糖', 'ATP 與 NADPH', 'RuBisCO', '澱粉'],
+        type: 'choice',
+        question: '在卡爾文循環（碳反應）中，負責催化二氧化碳固定的關鍵酵素是？',
+        choices: ['澱粉合成酶', 'RuBisCO (核酮糖二磷酸羧化酶)', '解旋酶', 'ATP 合成酶'],
         answer: 1,
-        explanation: '光反應產生 ATP 和 NADPH，供卡爾文循環合成葡萄糖使用。'
+        explanation: 'RuBisCO 是地球上含量最豐富的酵素，負責將無機二氧化碳固定到有機分子（RuBP）上的第一步關鍵反應。'
       },
       {
-        question: '光合作用釋放的 O₂ 主要來自哪個來源？',
-        choices: ['CO₂ 分解', '光能轉換', '水分子光解', '葡萄糖分解'],
-        answer: 2,
-        explanation: '光合作用中 O₂ 來源於光解水，水分子被分解成氧氣、電子和質子。'
+        type: 'choice',
+        question: '如果將綠色植物長期放在「純綠光」下照射，其光合作用的效率會如何？',
+        choices: ['效率極高，因為綠葉喜歡綠色光', '效率非常低，因為葉綠素幾乎不吸收綠光', '效率適中，與白光差不多', '效率不受光線波長影響'],
+        answer: 1,
+        explanation: '葉綠素主要吸收紅橙光與藍紫光，幾乎反射全部綠光（這也是植物呈綠色的原因），因此在純綠光下光合作用效率極低。'
+      },
+      {
+        type: 'order',
+        question: '請將光合作用的能量與物質轉換流程依序排列：',
+        items: [
+          { id: 'A', text: '葉綠素吸收光能，將高能電子送入傳遞鏈' },
+          { id: 'B', text: '水分子光解，釋放氧氣並產生質子與電子' },
+          { id: 'C', text: '產生高能分子 ATP 與 NADPH 並送往基質' },
+          { id: 'D', text: '卡爾文循環消耗能量固定二氧化碳，合成葡萄糖' }
+        ],
+        correctOrder: ['A', 'B', 'C', 'D'],
+        explanation: '光合作用始於葉綠素吸收光能，隨後發生光解水以補充電子。電子傳遞鏈產生的化學能（ATP/NADPH）最後供基質中的碳反應合成葡萄糖。'
+      },
+      {
+        type: 'choice',
+        question: '光合作用光反應釋放的氧氣（O₂），其氧原子主要來自於下列哪一種反應原料？',
+        choices: ['二氧化碳（CO₂）', '水分子（H₂O）', '葡萄糖（C₆H₁₂O₆）', '大氣中的游離氧'],
+        answer: 1,
+        explanation: '科學家透過同位素標記實驗（如魯賓與卡門實驗）證實，光合作用釋放的氧氣完全來自於光反應中水分子的光解，而非二氧化碳。'
+      },
+      {
+        type: 'classify',
+        question: '請將下列「循環使用的分子」歸類到它「被產生（充電）或被消耗（放電）」的對應階段：',
+        items: [
+          { name: 'NADP⁺ 還原成 NADPH 🔋', category: 'light' },
+          { name: 'ADP 磷酸化為 ATP ⚡', category: 'light' },
+          { name: 'NADPH 氧化成 NADP⁺ 🔄', category: 'calvin' },
+          { name: 'ATP 水解為 ADP 📉', category: 'calvin' }
+        ],
+        explanation: '光反應負責「充電」（產生 ATP 與 NADPH）；碳反應則負責「放電」（將其水解消耗以固定 CO₂），這兩對分子在葉綠體內循環不息。'
+      },
+      {
+        type: 'order',
+        question: '請將「水中的電子」在光反應中傳遞與能量化的生理路徑依序排列：',
+        items: [
+          { id: 'A', text: '水分子被光解，釋放出電子與質子' },
+          { id: 'B', text: '電子進入 PS II 反應中心並被光能激發' },
+          { id: 'C', text: '高能電子進入傳遞鏈，驅動 H⁺ 濃度差產生 ATP' },
+          { id: 'D', text: '電子傳至 PS I 再次被光激發，結合 NADP⁺ 生成 NADPH' }
+        ],
+        correctOrder: ['A', 'B', 'C', 'D'],
+        explanation: '這是光合作用光化學反應的「Z路徑」非循環電子傳遞鏈，電子從水出發，經過兩次光能激發與傳遞鏈，最終生成 ATP 與 NADPH。'
+      },
+      {
+        type: 'choice',
+        question: '卡爾文循環生成的直接產物並不是葡萄糖，而是哪一種三碳糖？',
+        choices: ['核糖 (Ribose)', 'G3P (甘油醛-3-磷酸)', '丙酮酸 (Pyruvate)', '蔗糖 (Sucrose)'],
+        answer: 1,
+        explanation: '卡爾文循環直接合成的是三碳糖 G3P，之後植物再利用兩分子 G3P 在基質或細胞質中進行縮合以合成六碳的葡萄糖。'
+      },
+      {
+        type: 'choice',
+        question: '就全球生態與氣候而言，光合作用最核心的地球環境調節意義是什麼？',
+        choices: ['釋放大量的二氧化碳減緩寒冬冰凍', '固定無機二氧化碳以減緩溫室效應，並為地球生命提供基礎有機碳與氧氣', '產生水分子以大幅增加全球的陸地降雨量', '反射所有光能以降低地表的整體環境溫度'],
+        answer: 1,
+        explanation: '光合作用固定大氣中的無機 CO₂ 轉為有機質，緩解溫室效應，釋放 O₂ 同時提供整個地球生命網最底層的食物與能量基礎。'
+      },
+      {
+        type: 'choice',
+        question: '在葉綠體的生理分工結構中，下列哪一項分佈是正確的？',
+        choices: ['類囊體膜富含葉綠素與電子傳遞鏈；基質富含卡爾文循環所需的催化酵素 (如 RuBisCO)', '基質富含葉綠素；類囊體膜富含 RuBisCO 酵素', '外膜富含光反應蛋白；內膜富含碳反應蛋白', '類囊體腔內進行卡爾文循環；基質進行水的光解'],
+        answer: 0,
+        explanation: '葉綠體具有精密的構造分工：吸收光能的光反應蛋白與電子傳遞鏈嵌入在「類囊體膜」上；而進行卡爾文循環的催化酵素則分佈在「基質」中。'
+      },
+      {
+        type: 'order',
+        question: '請將卡爾文循環（碳反應）進行時的三大生理步驟依序排列：',
+        items: [
+          { id: 'A', text: '二氧化碳固定：CO₂ 與五碳受體 RuBP 結合並分解為三碳酸 3-PGA' },
+          { id: 'B', text: '三碳酸還原：消耗 ATP 與 NADPH 將 3-PGA 還原為高能三碳糖 G3P' },
+          { id: 'C', text: '受體 RuBP 再生：部分 G3P 消耗 ATP，重新聚合成 RuBP 繼續循環' }
+        ],
+        correctOrder: ['A', 'B', 'C'],
+        explanation: '卡爾文循環包含三個核心順序步驟：二氧化碳固定（Fixation）、還原作用（Reduction）以及受體 RuBP 的再生（Regeneration）。'
+      },
+      {
+        type: 'choice',
+        question: '植物細胞的葉綠體與粒線體在細胞「能量轉換」上，最核心的生理差異為何？',
+        choices: ['葉綠體將光能轉化為化學能儲存；粒線體則將化學能釋放以產生 ATP 供細胞使用', '葉綠體製造氧氣，而粒線體不消耗氧氣', '葉綠體只在白天運作，粒線體只在夜晚運作', '葉綠體有雙層膜結構，而粒線體只有單層膜結構'],
+        answer: 0,
+        explanation: '葉綠體是「儲能器」，負責將太陽光能捕獲並儲存在高能糖類化學鍵中；粒線體是「能量釋放器」，負責把化學能氧化釋放生成 ATP，兩者相輔相成。'
       }
     ];
 
-    // 遊戲化測驗狀態
-    let currentQuestionIndex = 0; // 目前作答的題目索引
-    let score = 0;                // 累計得分
+    // 本次測驗使用的隨機題目變數
+    let questions = [];
 
-    // 初始化進度條的總題數標示
-    totalQNum.textContent = questions.length;
-    totalForScore.textContent = questions.length;
+    // ====== 從大題庫中隨機挑選指定數量的題目 ======
+    function getRandomQuestions(num = 6) {
+      // 使用 Fisher-Yates 隨機打亂演算法
+      const shuffled = [...MASTER_QUESTIONS];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = shuffled[i];
+        shuffled[i] = shuffled[j];
+        shuffled[j] = temp;
+      }
+      // 擷取前 num 題
+      return shuffled.slice(0, num);
+    }
 
-    // ====== 建立測驗（重設所有狀態） ======
+    // ==========================================================================
+    // 遊戲化測驗狀態管理
+    // ==========================================================================
+    let currentQuestionIndex = 0; // 目前答題的索引
+    let score = 0;                // 累計答對題數
+    let lives = 3;                // 生命值 (Hearts)
+    let timeLeft = 15;            // 每題限時 15 秒
+    let timerInterval = null;     // 計時器指標
+    let wrongQuestions = [];      // 錯題清單，用以渲染 3D 翻轉卡片複習
+
+    // ====== 建立/重置測驗 ======
     function createQuiz() {
+      // 1. 隨機抽選 6 題作為本次測驗題目，增加每次重測的新鮮感與豐富度！
+      questions = getRandomQuestions(6);
+
+      // 動態更新進度條的總題數標示，免受題庫變動影響
+      totalQNum.textContent = questions.length;
+      totalForScore.textContent = questions.length;
+
+      // 2. 清空題目區與重置狀態
       quizContainer.innerHTML = '';
       currentQuestionIndex = 0;
       score = 0;
+      lives = 3;
+      wrongQuestions = [];
+      stopTimer();
 
-      // 重設分數面板
+      // 3. 重設結算面板與成就掛載點
       scorePanel.style.display = 'none';
       scorePanel.classList.remove('pop-in');
       scoreNumber.textContent = '0';
       encouragement.textContent = '';
+      document.getElementById('badgeAnchor').innerHTML = '';
+      document.getElementById('reviewAnchor').style.display = 'none';
+      document.getElementById('flashcardGrid').innerHTML = '';
 
-      // 重設進度條
+      // 4. 恢復並重新顯示進度條與生命值
       quizProgress.style.display = '';
+      renderLives();
       updateProgress();
 
-      // 渲染第一題
+      // 5. 渲染第一題
       renderCurrentQuestion();
     }
 
-    // ====== 更新進度條與即時分數顯示 ======
+    // ====== 更新進度條與即時得分 ======
     function updateProgress() {
       currentQNum.textContent = currentQuestionIndex + 1;
       quizScoreLive.textContent = `目前得分：${score}`;
-      // 進度條寬度 = (已作答題數 / 總題數) * 100%
-      const progressPercent = ((currentQuestionIndex) / questions.length) * 100;
+      
+      // 計算並設定進度條寬度百分比
+      const progressPercent = (currentQuestionIndex / questions.length) * 100;
       quizProgressFill.style.width = progressPercent + '%';
     }
 
-    // ====== 渲染當前題目卡片 ======
+    // ====== 渲染生命值 (愛心) ======
+    function renderLives() {
+      const livesContainer = document.getElementById('livesContainer');
+      if (!livesContainer) return;
+      
+      livesContainer.innerHTML = '';
+      for (let i = 0; i < 3; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'heart';
+        heart.textContent = '❤️';
+        // 如果生命值小於等於目前的索引，則表現破碎/消失特效
+        if (i >= lives) {
+          heart.classList.add('broken');
+        }
+        livesContainer.appendChild(heart);
+      }
+    }
+
+    // ====== 扣除生命值並判定挑戰失敗 ======
+    function deductLife() {
+      if (lives > 0) {
+        lives--;
+        renderLives();
+        triggerShake(); // 答錯或超時觸發左右震動
+
+        if (lives <= 0) {
+          stopTimer();
+          // 短暫延遲後切換至挑戰失敗畫面
+          setTimeout(() => {
+            handleGameOver();
+          }, 500);
+          return true; // 代表遊戲已提前結束
+        }
+      }
+      return false;
+    }
+
+    // ====== 倒數計時器控制邏輯 ======
+    function startTimer() {
+      stopTimer(); // 安全防止重複計時
+      timeLeft = 15;
+      updateTimerDisplay();
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+
+        if (timeLeft <= 0) {
+          stopTimer();
+          handleTimeout();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function updateTimerDisplay() {
+      const timerFill = document.getElementById('timerFill');
+      if (!timerFill) return;
+
+      const percentage = (timeLeft / 15) * 100;
+      timerFill.style.width = percentage + '%';
+
+      // 根據時間長短更新進度條的警告樣式
+      timerFill.classList.remove('warning', 'danger');
+      if (timeLeft <= 5) {
+        timerFill.classList.add('danger'); // 最後 5 秒紅色警告閃爍
+      } else if (timeLeft <= 10) {
+        timerFill.classList.add('warning'); // 10 秒內橙色提示
+      }
+    }
+
+    // ====== 倒數超時懲罰邏輯 ======
+    function handleTimeout() {
+      const activeCard = document.querySelector('.question-card.active');
+      if (!activeCard) return;
+
+      // 標註為已答題以防重複操作
+      activeCard.dataset.answered = 'true';
+
+      // 鎖定當前題目中的所有按鈕與操作區
+      activeCard.querySelectorAll('.option, .draggable-item, .quick-classify-btn, .order-btn, .submit-quiz-btn').forEach(el => {
+        el.disabled = true;
+      });
+
+      const item = questions[currentQuestionIndex];
+      // 將超時記錄進錯題清單
+      wrongQuestions.push({
+        question: item.question,
+        userAnswer: '⏳ 挑戰時間到，未在 15 秒內作答',
+        correctAnswer: item.type === 'choice' ? item.choices[item.answer] : '依下方科學解析',
+        explanation: item.explanation
+      });
+
+      // 扣血
+      const isGameOver = deductLife();
+
+      if (!isGameOver) {
+        // 生命值還有剩，顯示超時解析與下一題按鈕
+        showFeedback(activeCard, false, `⏳ <strong>答題時間到！</strong>您未能在時限內送出答案。<br>${item.explanation}`);
+      }
+    }
+
+    // ====== 答錯視覺震動 (CSS Animation) ======
+    function triggerShake() {
+      const activeCard = document.querySelector('.question-card.active');
+      if (activeCard) {
+        activeCard.classList.remove('shake');
+        void activeCard.offsetWidth; // 強制瀏覽器重繪 (reflow) 以利再次觸發 CSS 動畫
+        activeCard.classList.add('shake');
+        setTimeout(() => activeCard.classList.remove('shake'), 350);
+      }
+    }
+
+    // ====== 答對粒子發散效果 (Visual Burst) ======
+    function triggerParticles(element) {
+      if (!element) return;
+      const rect = element.getBoundingClientRect();
+      const parentRect = quizContainer.getBoundingClientRect();
+
+      // 計算在 quizContainer 相對定位中的元素中心位置
+      const startX = rect.left - parentRect.left + rect.width / 2;
+      const startY = rect.top - parentRect.top + rect.height / 2;
+
+      const leafEmojis = ['🍃', '✨', '🍀', '🌱', '⭐'];
+      const pCount = 14;
+
+      for (let i = 0; i < pCount; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+
+        // 隨機角度與拋射距離
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.floor(Math.random() * 90) + 40;
+        const dx = Math.cos(angle) * distance + 'px';
+        const dy = Math.sin(angle) * distance + 'px';
+
+        const duration = (Math.random() * 0.4 + 0.6) + 's';
+        const rotate = (Math.random() * 360 - 180) + 'deg';
+
+        p.style.left = startX + 'px';
+        p.style.top = startY + 'px';
+        p.style.setProperty('--p-dx', dx);
+        p.style.setProperty('--p-dy', dy);
+        p.style.setProperty('--p-duration', duration);
+        p.style.setProperty('--p-rotate', rotate);
+
+        quizContainer.appendChild(p);
+
+        // 動畫結束後自動移除 DOM
+        setTimeout(() => p.remove(), parseFloat(duration) * 1000 + 50);
+      }
+    }
+
+    // ====== 渲染當前題型 ======
     function renderCurrentQuestion() {
       const item = questions[currentQuestionIndex];
       const index = currentQuestionIndex;
@@ -1101,64 +1943,357 @@
       // 清空容器
       quizContainer.innerHTML = '';
 
-      // 建立題目卡片（初始為隱藏狀態）
-      const questionEl = document.createElement('div');
-      questionEl.className = 'question question-card';
-      questionEl.innerHTML = `<h5>${index + 1}. ${item.question}</h5><div class="options"></div>`;
-      const optionsEl = questionEl.querySelector('.options');
+      // A. 選擇題型渲染
+      if (item.type === 'choice') {
+        const questionEl = document.createElement('div');
+        questionEl.className = 'question question-card';
+        questionEl.innerHTML = `<h5>${index + 1}. [單選題] ${item.question}</h5><div class="options"></div>`;
+        const optionsEl = questionEl.querySelector('.options');
 
-      // 建立選項按鈕
-      item.choices.forEach((choice, choiceIndex) => {
-        const option = document.createElement('button');
-        option.type = 'button';
-        option.className = 'option';
-        option.innerHTML = `<span>${choice}</span><small></small>`;
-        option.addEventListener('click', () => selectAnswer(choiceIndex, option, questionEl, item));
-        optionsEl.appendChild(option);
-      });
-
-      quizContainer.appendChild(questionEl);
-
-      // 使用 requestAnimationFrame 確保 DOM 已渲染，再觸發滑入動畫
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          questionEl.classList.add('active');
+        item.choices.forEach((choice, choiceIndex) => {
+          const option = document.createElement('button');
+          option.type = 'button';
+          option.className = 'option';
+          option.innerHTML = `<span>${choice}</span><small></small>`;
+          option.addEventListener('click', (e) => selectChoiceAnswer(choiceIndex, option, questionEl, item, e));
+          optionsEl.appendChild(option);
         });
-      });
+
+        quizContainer.appendChild(questionEl);
+      }
+      // B. 互動分類題型渲染
+      else if (item.type === 'classify') {
+        const questionEl = document.createElement('div');
+        questionEl.className = 'question question-card';
+        questionEl.innerHTML = `
+          <h5>${index + 1}. [分類題] ${item.question}</h5>
+          <div class="classify-container">
+            <div class="draggable-container" id="draggableContainer">
+              <!-- 未分類卡片將動態注入於此 -->
+            </div>
+            <div class="baskets-wrapper">
+              <div class="basket" id="basketLight">
+                <div class="basket-title">☀️ 光反應階段 (類囊體膜)</div>
+                <div class="basket-items" id="basketLightItems"></div>
+              </div>
+              <div class="basket" id="basketCalvin">
+                <div class="basket-title">🌀 卡爾文循環 (基質)</div>
+                <div class="basket-items" id="basketCalvinItems"></div>
+              </div>
+            </div>
+            <button type="button" class="submit-quiz-btn" id="submitClassifyBtn" disabled>確認提交分類 ➔</button>
+          </div>
+        `;
+
+        quizContainer.appendChild(questionEl);
+        initClassifyQuiz(item, questionEl);
+      }
+      // C. 步驟排序題型渲染
+      else if (item.type === 'order') {
+        const questionEl = document.createElement('div');
+        questionEl.className = 'question question-card';
+        questionEl.innerHTML = `
+          <h5>${index + 1}. [排序題] ${item.question}</h5>
+          <div class="order-container">
+            <div class="order-list" id="orderList">
+              <!-- JS 動態重排卡片將渲染於此 -->
+            </div>
+            <button type="button" class="submit-quiz-btn" id="submitOrderBtn">確認提交順序 ➔</button>
+          </div>
+        `;
+
+        quizContainer.appendChild(questionEl);
+        initOrderQuiz(item, questionEl);
+      }
+
+      // 動畫觸發：使用 requestAnimationFrame 確保滑入動畫流暢
+      const activeCard = quizContainer.querySelector('.question-card');
+      if (activeCard) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            activeCard.classList.add('active');
+          });
+        });
+      }
+
+      // 卡片載入完成後啟動 15 秒倒數
+      setTimeout(() => {
+        startTimer();
+      }, 450);
     }
 
-    // ====== 選擇答案邏輯 ======
-    function selectAnswer(choiceIndex, optionEl, questionEl, item) {
-      // 防止重複作答
+    // ====== 選擇題作答判定 ======
+    function selectChoiceAnswer(choiceIndex, optionEl, questionEl, item, event) {
       if (questionEl.dataset.answered) return;
       questionEl.dataset.answered = 'true';
+      stopTimer();
 
       const isCorrect = choiceIndex === item.answer;
       if (isCorrect) {
         score++;
         optionEl.classList.add('correct');
+        triggerParticles(optionEl); // 答對爆發微粒子
       } else {
         optionEl.classList.add('wrong');
+        wrongQuestions.push({
+          question: item.question,
+          userAnswer: item.choices[choiceIndex],
+          correctAnswer: item.choices[item.answer],
+          explanation: item.explanation
+        });
+        deductLife(); // 答錯扣一顆心
       }
       optionEl.classList.add('selected');
 
-      // 鎖定所有選項，並標示正確答案
+      // 鎖定所有選項，並高亮顯示正確答案
       const options = questionEl.querySelectorAll('.option');
       options.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === item.answer) btn.classList.add('correct');
       });
 
-      // 顯示解析文字
+      showFeedback(questionEl, isCorrect, item.explanation);
+    }
+
+    // ====== 分類題交互邏輯 ======
+    function initClassifyQuiz(item, questionEl) {
+      const dragContainer = questionEl.querySelector('#draggableContainer');
+      const lightItems = questionEl.querySelector('#basketLightItems');
+      const calvinItems = questionEl.querySelector('#basketCalvinItems');
+      const submitBtn = questionEl.querySelector('#submitClassifyBtn');
+
+      // placements 紀錄卡片的歸處： { itemIndex: 'light' | 'calvin' | null }
+      const placements = {};
+      item.items.forEach((_, idx) => { placements[idx] = null; });
+
+      function renderClassifyState() {
+        // 重置容器內容
+        dragContainer.innerHTML = '';
+        lightItems.innerHTML = '';
+        calvinItems.innerHTML = '';
+
+        let allPlaced = true;
+
+        item.items.forEach((subItem, idx) => {
+          const placement = placements[idx];
+
+          if (placement === null) {
+            allPlaced = false;
+            // 渲染在「未分類池」
+            const el = document.createElement('div');
+            el.className = 'draggable-item';
+            el.innerHTML = `<span>${subItem.name}</span>`;
+
+            // 點選卡片事件：在卡片下方動態生成快捷分類選單
+            el.addEventListener('click', (e) => {
+              e.stopPropagation();
+              // 清除既存快捷選單
+              const oldMenu = questionEl.querySelector('.quick-classify-menu');
+              if (oldMenu) oldMenu.remove();
+
+              const menu = document.createElement('div');
+              menu.className = 'quick-classify-menu';
+
+              // 計算點擊按鈕的相對定位
+              const rect = el.getBoundingClientRect();
+              const containerRect = dragContainer.getBoundingClientRect();
+              menu.style.left = (rect.left - containerRect.left) + 'px';
+              menu.style.top = (rect.bottom - containerRect.top + 6) + 'px';
+
+              menu.innerHTML = `
+                <button type="button" class="quick-classify-btn" data-dest="light">☀️ 放入光反應</button>
+                <button type="button" class="quick-classify-btn" data-dest="calvin">🌀 放入卡爾文</button>
+              `;
+
+              menu.querySelectorAll('.quick-classify-btn').forEach(btn => {
+                btn.addEventListener('click', (ev) => {
+                  ev.stopPropagation();
+                  const dest = btn.dataset.dest;
+                  placements[idx] = dest;
+                  menu.remove();
+
+                  // 給對應歸類籃子一個 pulse 生動動畫
+                  const basketEl = questionEl.querySelector(dest === 'light' ? '#basketLight' : '#basketCalvin');
+                  basketEl.classList.remove('pulse');
+                  void basketEl.offsetWidth; // 觸發 reflow
+                  basketEl.classList.add('pulse');
+
+                  renderClassifyState();
+                });
+              });
+
+              dragContainer.appendChild(menu);
+            });
+
+            dragContainer.appendChild(el);
+          } else {
+            // 渲染在「對應歸類籃子」
+            const el = document.createElement('div');
+            el.className = 'basket-item';
+            el.innerHTML = `<span>${subItem.name} ✕</span>`;
+
+            // 點擊籃子內的卡片：退回未分類池
+            el.addEventListener('click', () => {
+              placements[idx] = null;
+              renderClassifyState();
+            });
+
+            if (placement === 'light') {
+              lightItems.appendChild(el);
+            } else {
+              calvinItems.appendChild(el);
+            }
+          }
+        });
+
+        // 點擊空白處關閉快捷分類選單
+        document.addEventListener('click', () => {
+          const oldMenu = questionEl.querySelector('.quick-classify-menu');
+          if (oldMenu) oldMenu.remove();
+        });
+
+        // 當全部卡片皆已歸類時，解鎖確認提交按鈕
+        submitBtn.disabled = !allPlaced;
+      }
+
+      renderClassifyState();
+
+      // 提交驗證
+      submitBtn.addEventListener('click', () => {
+        if (questionEl.dataset.answered) return;
+        questionEl.dataset.answered = 'true';
+        stopTimer();
+        submitBtn.disabled = true;
+
+        let allCorrect = true;
+        const wrongPlacements = [];
+
+        item.items.forEach((subItem, idx) => {
+          const userCategory = placements[idx];
+          // 如果 category 是 both，表示在光反應與碳反應都合理，否則必須精確一致
+          const isCorrect = (subItem.category === 'both') || (userCategory === subItem.category);
+          if (!isCorrect) {
+            allCorrect = false;
+            wrongPlacements.push(`${subItem.name}(誤歸於${userCategory === 'light' ? '光反應' : '卡爾文'})`);
+          }
+        });
+
+        if (allCorrect) {
+          score++;
+          triggerParticles(submitBtn);
+          showFeedback(questionEl, true, item.explanation);
+        } else {
+          wrongQuestions.push({
+            question: item.question,
+            userAnswer: `錯誤歸類：${wrongPlacements.join('、')}`,
+            correctAnswer: `光反應包含：${item.items.filter(x => x.category === 'light' || x.category === 'both').map(x => x.name).join('、')}；卡爾文循環包含：${item.items.filter(x => x.category === 'calvin' || x.category === 'both').map(x => x.name).join('、')}`,
+            explanation: item.explanation
+          });
+          deductLife();
+          showFeedback(questionEl, false, item.explanation);
+        }
+
+        // 鎖定所有卡片，移除卡片上的刪除 ✕ 符號
+        questionEl.querySelectorAll('.basket-item').forEach(el => {
+          el.style.pointerEvents = 'none';
+          el.innerHTML = el.innerHTML.replace(' ✕', '');
+        });
+      });
+    }
+
+    // ====== 步驟排序題交互邏輯 ======
+    function initOrderQuiz(item, questionEl) {
+      const orderList = questionEl.querySelector('#orderList');
+      const submitBtn = questionEl.querySelector('#submitOrderBtn');
+
+      let currentOrder = [...item.items];
+
+      // 隨機打亂初始順序 (確保不會剛好是正確排序)
+      do {
+        currentOrder.sort(() => Math.random() - 0.5);
+      } while (currentOrder.map(x => x.id).join('') === item.correctOrder.join(''));
+
+      function renderOrderList() {
+        orderList.innerHTML = '';
+        currentOrder.forEach((subItem, idx) => {
+          const itemEl = document.createElement('div');
+          itemEl.className = 'order-item';
+          itemEl.innerHTML = `
+            <div class="order-item-content">
+              <span class="order-index">${idx + 1}</span>
+              <span>${subItem.text}</span>
+            </div>
+            <div class="order-actions">
+              <button type="button" class="order-btn up-btn" ${idx === 0 ? 'disabled' : ''}>▲</button>
+              <button type="button" class="order-btn down-btn" ${idx === currentOrder.length - 1 ? 'disabled' : ''}>▼</button>
+            </div>
+          `;
+
+          // 上移按鈕事件
+          itemEl.querySelector('.up-btn').addEventListener('click', () => {
+            if (idx > 0) {
+              const temp = currentOrder[idx];
+              currentOrder[idx] = currentOrder[idx - 1];
+              currentOrder[idx - 1] = temp;
+              renderOrderList();
+            }
+          });
+
+          // 下移按鈕事件
+          itemEl.querySelector('.down-btn').addEventListener('click', () => {
+            if (idx < currentOrder.length - 1) {
+              const temp = currentOrder[idx];
+              currentOrder[idx] = currentOrder[idx + 1];
+              currentOrder[idx + 1] = temp;
+              renderOrderList();
+            }
+          });
+
+          orderList.appendChild(itemEl);
+        });
+      }
+
+      renderOrderList();
+
+      // 提交驗證
+      submitBtn.addEventListener('click', () => {
+        if (questionEl.dataset.answered) return;
+        questionEl.dataset.answered = 'true';
+        stopTimer();
+        submitBtn.disabled = true;
+
+        // 鎖定排序按鈕
+        questionEl.querySelectorAll('.order-btn').forEach(btn => btn.disabled = true);
+
+        const userOrderIds = currentOrder.map(x => x.id);
+        const isCorrect = userOrderIds.join('') === item.correctOrder.join('');
+
+        if (isCorrect) {
+          score++;
+          triggerParticles(submitBtn);
+          showFeedback(questionEl, true, item.explanation);
+        } else {
+          wrongQuestions.push({
+            question: item.question,
+            userAnswer: `您的排列：${currentOrder.map((x, i) => `${i+1}.${x.text.substring(0, 8)}...`).join(' → ')}`,
+            correctAnswer: `正確順序應為：<br>${item.correctOrder.map((id, i) => `${i+1}. ${item.items.find(x => x.id === id).text}`).join('<br>')}`,
+            explanation: item.explanation
+          });
+          deductLife();
+          showFeedback(questionEl, false, item.explanation);
+        }
+      });
+    }
+
+    // ====== 顯示科學解析與下一題按鈕 ======
+    function showFeedback(questionEl, isCorrect, explanation) {
       const feedback = document.createElement('div');
       feedback.className = 'feedback';
-      feedback.textContent = isCorrect ? `✅ 答對！${item.explanation}` : `❌ 答錯。${item.explanation}`;
+      feedback.innerHTML = isCorrect 
+        ? `✅ <strong>答對了！恭喜獲得能量！</strong><br>${explanation}` 
+        : `❌ <strong>答錯了。別氣餒，吸收知識再次成長！</strong><br>${explanation}`;
       questionEl.appendChild(feedback);
 
-      // 更新即時分數
-      quizScoreLive.textContent = `目前得分：${score}`;
-
-      // 建立「下一題」或「查看結果」按鈕
       const isLastQuestion = currentQuestionIndex === questions.length - 1;
       const nextBtn = document.createElement('button');
       nextBtn.type = 'button';
@@ -1169,10 +2304,8 @@
 
       nextBtn.addEventListener('click', () => {
         if (isLastQuestion) {
-          // 最後一題 → 切換至計分面板
           transitionToScore(questionEl);
         } else {
-          // 切換至下一題
           nextQuestion(questionEl);
         }
       });
@@ -1180,63 +2313,63 @@
       questionEl.appendChild(nextBtn);
     }
 
-    // ====== 切換至下一題（帶動畫） ======
+    // ====== 切換至下一題卡片 (向左退場動畫) ======
     function nextQuestion(currentCard) {
-      // 先觸發當前卡片的退場動畫（向左滑出）
       currentCard.classList.remove('active');
       currentCard.classList.add('exit');
 
-      // 動畫結束後渲染下一題
       setTimeout(() => {
         currentQuestionIndex++;
         updateProgress();
         renderCurrentQuestion();
-      }, 400); // 與 CSS transition 時間一致
+      }, 400); // 400ms 退場完成後，切換下一題
     }
 
-    // ====== 切換至計分面板（帶動畫） ======
+    // ====== 挑戰成功結算面板 ======
     function transitionToScore(currentCard) {
-      // 退場當前卡片
       currentCard.classList.remove('active');
       currentCard.classList.add('exit');
 
-      // 更新進度條到 100%
+      // 強制進度條滿檔
       quizProgressFill.style.width = '100%';
 
       setTimeout(() => {
-        quizContainer.innerHTML = ''; // 清空題目區
-
-        // 隱藏進度條
+        quizContainer.innerHTML = '';
         quizProgress.style.display = 'none';
 
-        // 顯示計分面板並觸發彈出動畫
+        // 顯示計分面板
         scorePanel.style.display = 'flex';
         scorePanel.classList.add('pop-in');
 
-        // 啟動分數跑數動畫（從 0 跑到實際得分）
+        // 得分跑數動畫
         animateScoreCountUp(score);
 
-        // 設定鼓勵文字
-        const rate = score / questions.length;
-        encouragement.textContent = rate >= 0.8
-          ? '🌟 太棒了！你已經掌握光合作用的關鍵步驟。'
-          : rate >= 0.6
-            ? '👍 很好！再複習一次可以更穩固概念。'
-            : '💪 加油！再重新作答一次，你會更清楚光合作用流程。';
+        // 頒發玻璃擬態成就徽章
+        renderAchievementBadge(score);
 
-        // 高分慶祝：綠葉飄落動畫！
+        // 渲染錯題 3D 翻轉複習卡片
+        renderFlashcards();
+
+        // 鼓勵評語與徽章回饋
+        const rate = score / questions.length;
+        encouragement.innerHTML = rate >= 0.8
+          ? '🌟 <strong>卓越！</strong>你以絕佳的生物直覺與知識，解鎖了植物王國最核心的運作機制！'
+          : rate >= 0.6
+            ? '👍 <strong>很棒！</strong>光合作用的脈絡已大致清晰，點擊下方錯題卡片進行 3D 複習能更上層樓！'
+            : '💪 <strong>繼續加油！</strong>有些關鍵概念可能有些模糊。別擔心，點擊下方錯題卡片翻看科學解析，隨時可以再試一次！';
+
+        // 高分慶祝：大量綠葉灑落！
         if (rate >= 0.8) {
-          setTimeout(() => startLeafCelebration(), 600);
+          setTimeout(() => startLeafCelebration(), 500);
         }
       }, 450);
     }
 
-    // ====== 分數跑數動畫 ======
+    // ====== 分數累加跑數效果 ======
     function animateScoreCountUp(targetScore) {
       let current = 0;
       scoreNumber.textContent = '0';
 
-      // 若得分為 0 則跳過跑數動畫
       if (targetScore === 0) return;
 
       const interval = setInterval(() => {
@@ -1245,41 +2378,144 @@
         if (current >= targetScore) {
           clearInterval(interval);
         }
-      }, 120); // 每 120 毫秒加 1，控制跑數節奏
+      }, 100);
     }
 
-    // ====== 綠葉飄落慶祝動畫 ======
+    // ====== 挑戰失敗畫面 ======
+    function handleGameOver() {
+      quizContainer.innerHTML = '';
+      quizProgress.style.display = 'none';
+
+      const gameOverEl = document.createElement('div');
+      gameOverEl.className = 'question question-card active';
+      gameOverEl.style.textAlign = 'center';
+      gameOverEl.style.padding = '3rem 2rem';
+      gameOverEl.innerHTML = `
+        <div style="font-size: 4rem; margin-bottom: 1rem;">💔</div>
+        <h4 style="font-family: 'Noto Serif TC', serif; font-size: 1.55rem; color: #c62828; margin: 0 0 1rem; font-weight:700;">生命值耗盡！挑戰失敗</h4>
+        <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 2.2rem; font-size: 0.98rem;">很遺憾，您的生命值已經扣光。植物的綠色能量源源不絕，吸收知識後重新挑戰吧！</p>
+        <button type="button" class="next-btn" id="retryGameOverBtn" style="background: var(--dark); color: #fff;">🔄 重新挑戰</button>
+      `;
+
+      gameOverEl.querySelector('#retryGameOverBtn').addEventListener('click', createQuiz);
+      quizContainer.appendChild(gameOverEl);
+    }
+
+    // ====== 動態頒發玻璃擬態成就徽章 ======
+    function renderAchievementBadge(scoreVal) {
+      const badgeAnchor = document.getElementById('badgeAnchor');
+      if (!badgeAnchor) return;
+      badgeAnchor.innerHTML = '';
+
+      let badgeClass = '';
+      let badgeIcon = '';
+      let badgeTitle = '';
+      let badgeDesc = '';
+
+      const rate = scoreVal / questions.length;
+      if (rate >= 1.0) {
+        badgeClass = 'badge-master';
+        badgeIcon = '👑';
+        badgeTitle = '光合大師';
+        badgeDesc = '無懈可擊！你完美地解鎖了光反應與卡爾文循環的完整物質與能量轉換，是實至名歸的植物學大師！';
+      } else if (rate >= 0.8) {
+        badgeClass = 'badge-guardian';
+        badgeIcon = '🌿';
+        badgeTitle = '綠葉守護者';
+        badgeDesc = '卓越！你對葉綠素、電子傳遞鏈以及二氧化碳固定的脈絡極為清晰，成功守護了森林的生命律動！';
+      } else if (rate >= 0.6) {
+        badgeClass = 'badge-sprout';
+        badgeIcon = '🌱';
+        badgeTitle = '陽光新芽';
+        badgeDesc = '很好！你已破土而出，吸收了充足的知識陽光。點擊下方錯題卡翻看原理解析，你很快就能成為大師！';
+      } else {
+        badgeClass = 'badge-shade';
+        badgeIcon = '🍄';
+        badgeTitle = '暗室小草';
+        badgeDesc = '別氣餒！雖然此時光照較弱，但生命富有彈性。翻看下方的 3D 解析卡片，隨時可以再次茁壯成長！';
+      }
+
+      const badgeCard = document.createElement('div');
+      badgeCard.className = `badge-card ${badgeClass}`;
+      badgeCard.innerHTML = `
+        <div class="badge-icon">${badgeIcon}</div>
+        <div class="badge-title">${badgeTitle}</div>
+        <div class="badge-desc">${badgeDesc}</div>
+      `;
+
+      badgeAnchor.appendChild(badgeCard);
+    }
+
+    // ====== 渲染錯題 3D 翻轉卡片複習 ======
+    function renderFlashcards() {
+      const reviewAnchor = document.getElementById('reviewAnchor');
+      const flashcardGrid = document.getElementById('flashcardGrid');
+
+      if (!reviewAnchor || !flashcardGrid) return;
+
+      // 如果完全沒有錯題，則隱藏複習區
+      if (wrongQuestions.length === 0) {
+        reviewAnchor.style.display = 'none';
+        return;
+      }
+
+      reviewAnchor.style.display = 'block';
+      flashcardGrid.innerHTML = '';
+
+      wrongQuestions.forEach(item => {
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'flashcard-wrapper';
+        cardWrapper.innerHTML = `
+          <div class="flashcard">
+            <!-- 卡片正面：題目與學生作答 -->
+            <div class="flashcard-front">
+              <div class="flashcard-q">${item.question}</div>
+              <div class="flashcard-ans" style="color: #c62828;"><strong>您的答覆：</strong>${item.userAnswer}</div>
+              <div class="flashcard-hint">💡 點擊卡片翻看科學原理解析 ➔</div>
+            </div>
+            <!-- 卡片背面：正確解答與科學解析 -->
+            <div class="flashcard-back">
+              <div class="flashcard-q" style="color: #2e7d32;">正確答案：${item.correctAnswer}</div>
+              <div class="flashcard-ans"><strong>原理解析：</strong>${item.explanation}</div>
+              <div class="flashcard-hint">🔄 點擊卡片翻回正面 ➔</div>
+            </div>
+          </div>
+        `;
+
+        const cardInner = cardWrapper.querySelector('.flashcard');
+        cardWrapper.addEventListener('click', () => {
+          cardInner.classList.toggle('flipped'); // 3D Y軸旋轉 180度
+        });
+
+        flashcardGrid.appendChild(cardWrapper);
+      });
+    }
+
+    // ====== 綠葉灑落慶祝動畫 ======
     function startLeafCelebration() {
       const leafEmojis = ['🍃', '🌿', '🍀', '☘️', '🌱'];
-      const leafCount = 25; // 撒落 25 片綠葉
+      const leafCount = 28;
 
       for (let i = 0; i < leafCount; i++) {
-        // 為每片葉子設置隨機延遲，營造自然飄落效果
         setTimeout(() => {
           const leaf = document.createElement('div');
           leaf.className = 'leaf-confetti';
           leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
 
-          // 隨機起始水平位置
+          // 隨機左邊位置、旋轉角度、落下速度與大小
           leaf.style.left = Math.random() * 100 + 'vw';
-
-          // 隨機掉落速度
           const fallDuration = (Math.random() * 2 + 2.5) + 's';
           leaf.style.setProperty('--fall-duration', fallDuration);
-
-          // 隨機旋轉角度
           const rotation = (Math.random() * 720 - 360) + 'deg';
           leaf.style.setProperty('--leaf-rotation', rotation);
-
-          // 隨機大小
-          leaf.style.fontSize = (Math.random() * 1 + 1.2) + 'rem';
+          leaf.style.fontSize = (Math.random() * 0.8 + 1.2) + 'rem';
 
           document.body.appendChild(leaf);
 
-          // 動畫結束後自動移除 DOM 元素
+          // 動畫播放結束後自動移除 DOM
           const durationMs = parseFloat(fallDuration) * 1000;
           setTimeout(() => leaf.remove(), durationMs + 100);
-        }, i * 80); // 每片葉子間隔 80 毫秒撒落
+        }, i * 75);
       }
     }
 
