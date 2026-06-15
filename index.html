@@ -1340,13 +1340,13 @@
         </article>
         <article class="card" data-stage="2">
           <span>Stage 02</span>
-          <h3>卡爾文循環（葉綠體基質）</h3>
-          <p>CO₂ 固定、RuBisCO 酵素參與反應，產生 G3P 作為碳骨架。</p>
+          <h3>固碳反應（葉綠體基質）</h3>
+          <p>CO₂ 固定、利用光反應能量產生三碳化合物作為碳骨架。</p>
         </article>
         <article class="card" data-stage="3">
           <span>Stage 03</span>
           <h3>葡萄糖合成（最終產物）</h3>
-          <p>G3P 合成葡萄糖，供植物製造澱粉、脂肪與其他碳水化合物。</p>
+          <p>三碳化合物合成葡萄糖，供植物製造澱粉、脂肪與其他碳水化合物。</p>
         </article>
       </div>
       <div class="detail-panel fade-in" id="detailPanel">
@@ -1453,15 +1453,15 @@
       <!-- 答題進度與狀態列 -->
       <div class="quiz-progress" id="quizProgress">
         <div class="quiz-progress-text">
-          <span>進度：第 <span id="currentQNum">1</span> 題 / 共 <span id="totalQNum">5</span> 題</span>
+          <span>進度：第 <span id="currentQNum">1</span> 題 / 共 <span id="totalQNum">8</span> 題</span>
           <span class="quiz-score-live" id="quizScoreLive">目前得分：0</span>
         </div>
         <div class="quiz-progress-bar">
           <div class="quiz-progress-fill" id="quizProgressFill"></div>
         </div>
         
-        <!-- 限時倒數計時條 -->
-        <div class="timer-container">
+        <!-- 限時倒數計時條 (已停用倒數) -->
+        <div class="timer-container" style="display: none;">
           <div id="timerFill" class="timer-fill" style="width: 100%;"></div>
         </div>
       </div>
@@ -1474,7 +1474,7 @@
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem;">
           <div>
             <div class="score-number" id="scoreNumber">0</div>
-            <div class="score-label">答對題數 / <span id="totalForScore">5</span> 題</div>
+            <div class="score-label">答對題數 / <span id="totalForScore">8</span> 題</div>
             <strong id="scoreText" style="display:none;"></strong>
             <div id="encouragement" style="margin-top: 0.6rem; line-height: 1.6; max-width: 500px;"></div>
           </div>
@@ -1507,26 +1507,25 @@
         </ul>`
       },
       2: {
-        title: '卡爾文循環（葉綠體基質）',
-        labels: ['條件：ATP + NADPH', '場所：葉綠體基質', '產物：G3P'],
+        title: '固碳反應（葉綠體基質）',
+        labels: ['條件：ATP + NADPH', '場所：葉綠體基質', '產物：三碳糖'],
         text: `<ul>
-          <li>CO₂ 固定 → 與五碳化合物 RuBP 結合。</li>
-          <li>RuBisCO 酵素催化 → 催化 CO₂ 與 RuBP 的結合反應。</li>
-          <li>產生三碳化合物（3-PGA）→ 分解為兩分子三碳化合物。</li>
-          <li>消耗 ATP 與 NADPH → 將 3-PGA 還原為 G3P。</li>
-          <li>產生 G3P → 儲存在葉綠體基質，是葡萄糖合成的直接前驅物。</li>
-          <li>RuBP 再生 → 部分 G3P 消耗 ATP 重新合成 RuBP，循環持續進行。</li>
+          <li>CO₂ 固定 → 二氧化碳與五碳化合物結合，由酵素催化進行反應。</li>
+          <li>產生三碳化合物 → 二氧化碳固定後分解為三碳化合物。</li>
+          <li>消耗 ATP 與 NADPH → 利用光反應產生的化學能與還原力將其還原為高能三碳糖。</li>
+          <li>產生三碳糖 → 儲存在葉綠體基質，是葡萄糖合成的直接原料。</li>
+          <li>五碳化合物再生 → 部分三碳糖消耗 ATP 重新合成五碳化合物，使循環持續進行。</li>
         </ul>`
       },
       3: {
         title: '葡萄糖合成（最終產物）',
-        labels: ['條件：G3P 累積', '場所：葉綠體基質', '產物：葡萄糖 / 澱粉 / 脂肪 / 蔗糖 / 胺基酸'],
+        labels: ['條件：三碳糖累積', '場所：葉綠體基質', '產物：葡萄糖 / 澱粉 / 脂肪 / 蔗糖 / 胺基酸'],
         text: `<ul>
-          <li>G3P 縮合 → 兩分子 G3P（三碳）縮合成一分子葡萄糖（六碳）。</li>
+          <li>葡萄糖合成 → 兩分子三碳糖縮合成一分子葡萄糖（六碳）。</li>
           <li>葡萄糖暫存 → 短期儲存在葉綠體基質，隨後輸出至細胞質。</li>
           <li>合成澱粉 → 聚合後儲存在葉綠體的澱粉粒（長期儲存）。</li>
           <li>合成蔗糖 → 在細胞質中轉為蔗糖，透過韌皮部輸送至全株。</li>
-          <li>合成脂肪 → G3P 進入脂肪酸合成路徑，儲存在油脂體。</li>
+          <li>合成脂肪 → 三碳糖進入脂肪酸合成路徑，儲存在油脂體。</li>
           <li>合成胺基酸 → 結合氮素後合成胺基酸，進一步組成蛋白質。</li>
         </ul>`
       }
@@ -1576,7 +1575,7 @@
 
     // ==========================================================================
     // 大題庫資料 (MASTER_QUESTIONS)：包含 14 道單選、分類與排序題型
-    // 每次重新測驗時，系統會從中隨機抽取 6 道題目，使複習充滿新鮮感！
+    // 每次重新測驗時，系統會從中隨機抽取 8 道題目，使複習充滿新鮮感！
     // ==========================================================================
     const MASTER_QUESTIONS = [
       {
@@ -1604,14 +1603,14 @@
           { name: '葡萄糖 🍬', category: 'calvin' },
           { name: 'ATP & NADPH 🔋', category: 'both' }
         ],
-        explanation: '光反應利用光能分解水，釋放氧氣並產生 ATP/NADPH；卡爾文循環則消耗 ATP/NADPH 來固定二氧化碳並合成葡萄糖。'
+        explanation: '光反應利用光能分解水，釋放氧氣並產生 ATP/NADPH；固碳反應則消耗 ATP/NADPH 來固定二氧化碳並合成葡萄糖。'
       },
       {
         type: 'choice',
-        question: '在卡爾文循環（碳反應）中，負責催化二氧化碳固定的關鍵酵素是？',
-        choices: ['澱粉合成酶', 'RuBisCO (核酮糖二磷酸羧化酶)', '解旋酶', 'ATP 合成酶'],
+        question: '光反應所產生的化學能與還原力（ATP 與 NADPH），主要在下列哪一個過程中被消耗？',
+        choices: ['水分子的分裂（光解）', '固碳反應中固定與還原二氧化碳的過程', '葉綠體吸收光能激發電子的過程', '氧氣釋放到大氣中的過程'],
         answer: 1,
-        explanation: 'RuBisCO 是地球上含量最豐富的酵素，負責將無機二氧化碳固定到有機分子（RuBP）上的第一步關鍵反應。'
+        explanation: '光反應產生的 ATP 與 NADPH 攜帶化學能與還原力，會被送往葉綠體基質，用於固碳反應中固定並還原二氧化碳以合成醣類。'
       },
       {
         type: 'choice',
@@ -1627,17 +1626,17 @@
           { id: 'A', text: '葉綠素吸收光能，將高能電子送入傳遞鏈' },
           { id: 'B', text: '水分子光解，釋放氧氣並產生質子與電子' },
           { id: 'C', text: '產生高能分子 ATP 與 NADPH 並送往基質' },
-          { id: 'D', text: '卡爾文循環消耗能量固定二氧化碳，合成葡萄糖' }
+          { id: 'D', text: '固碳反應消耗能量固定二氧化碳，合成葡萄糖' }
         ],
         correctOrder: ['A', 'B', 'C', 'D'],
-        explanation: '光合作用始於葉綠素吸收光能，隨後發生光解水以補充電子。電子傳遞鏈產生的化學能（ATP/NADPH）最後供基質中的碳反應合成葡萄糖。'
+        explanation: '光合作用始於葉綠素吸收光能，隨後發生光解水以補充電子。電子傳遞鏈產生的化學能（ATP/NADPH）最後供基質中的固碳反應合成葡萄糖。'
       },
       {
         type: 'choice',
         question: '光合作用光反應釋放的氧氣（O₂），其氧原子主要來自於下列哪一種反應原料？',
-        choices: ['二氧化碳（CO₂）', '水分子（H₂O）', '葡萄糖（C₆H₁₂O₆）', '大氣中的游離氧'],
+        choices: ['二氧化碳（CO₂）', '水分子（H₂O）', '葡萄糖（C₆H₁₂O₆）', '葉綠素'],
         answer: 1,
-        explanation: '科學家透過同位素標記實驗（如魯賓與卡門實驗）證實，光合作用釋放的氧氣完全來自於光反應中水分子的光解，而非二氧化碳。'
+        explanation: '科學家透過同位素標記實驗證實，光合作用釋放的氧氣完全來自於光反應中水分子的光解，而非二氧化碳。'
       },
       {
         type: 'classify',
@@ -1648,7 +1647,7 @@
           { name: 'NADPH 氧化成 NADP⁺ 🔄', category: 'calvin' },
           { name: 'ATP 水解為 ADP 📉', category: 'calvin' }
         ],
-        explanation: '光反應負責「充電」（產生 ATP 與 NADPH）；碳反應則負責「放電」（將其水解消耗以固定 CO₂），這兩對分子在葉綠體內循環不息。'
+        explanation: '光反應負責「充電」（產生 ATP 與 NADPH）；固碳反應則負責「放電」（將其水解消耗以固定 CO₂），這兩對分子在葉綠體內循環不息。'
       },
       {
         type: 'order',
@@ -1664,10 +1663,10 @@
       },
       {
         type: 'choice',
-        question: '卡爾文循環生成的直接產物並不是葡萄糖，而是哪一種三碳糖？',
-        choices: ['核糖 (Ribose)', 'G3P (甘油醛-3-磷酸)', '丙酮酸 (Pyruvate)', '蔗糖 (Sucrose)'],
+        question: '固碳反應生成的直接有機產物，主要為下列哪一種物質？',
+        choices: ['五碳糖 (核糖)', '三碳糖 (三碳醣)', '六碳糖 (葡萄糖)', '雙糖 (蔗糖)'],
         answer: 1,
-        explanation: '卡爾文循環直接合成的是三碳糖 G3P，之後植物再利用兩分子 G3P 在基質或細胞質中進行縮合以合成六碳的葡萄糖。'
+        explanation: '固碳反應直接合成的其實是三碳糖（三碳醣），之後植物再利用兩分子三碳糖在基質或細胞質中縮合以合成六碳的葡萄糖。'
       },
       {
         type: 'choice',
@@ -1679,20 +1678,20 @@
       {
         type: 'choice',
         question: '在葉綠體的生理分工結構中，下列哪一項分佈是正確的？',
-        choices: ['類囊體膜富含葉綠素與電子傳遞鏈；基質富含卡爾文循環所需的催化酵素 (如 RuBisCO)', '基質富含葉綠素；類囊體膜富含 RuBisCO 酵素', '外膜富含光反應蛋白；內膜富含碳反應蛋白', '類囊體腔內進行卡爾文循環；基質進行水的光解'],
+        choices: ['類囊體膜富含葉綠素與電子傳遞鏈；基質富含固碳反應所需的催化酵素', '基質富含葉綠素；類囊體膜富含固碳反應所需的催化酵素', '外膜富含光反應蛋白；內膜富含碳反應蛋白', '類囊體腔內進行固碳反應；基質進行水的光解'],
         answer: 0,
-        explanation: '葉綠體具有精密的構造分工：吸收光能的光反應蛋白與電子傳遞鏈嵌入在「類囊體膜」上；而進行卡爾文循環的催化酵素則分佈在「基質」中。'
+        explanation: '葉綠體具有精密的構造分工：吸收光能的光反應蛋白與電子傳遞鏈嵌入在「類囊體膜」上；而進行固碳反應的催化酵素則分佈在「基質」中。'
       },
       {
         type: 'order',
-        question: '請將卡爾文循環（碳反應）進行時的三大生理步驟依序排列：',
+        question: '請將固碳反應進行時的三大生理步驟依序排列：',
         items: [
-          { id: 'A', text: '二氧化碳固定：CO₂ 與五碳受體 RuBP 結合並分解為三碳酸 3-PGA' },
-          { id: 'B', text: '三碳酸還原：消耗 ATP 與 NADPH 將 3-PGA 還原為高能三碳糖 G3P' },
-          { id: 'C', text: '受體 RuBP 再生：部分 G3P 消耗 ATP，重新聚合成 RuBP 繼續循環' }
+          { id: 'A', text: '二氧化碳固定：二氧化碳與五碳化合物結合，並分解為三碳化合物' },
+          { id: 'B', text: '三碳糖的還原：消耗 ATP 與 NADPH，將其還原為高能三碳糖' },
+          { id: 'C', text: '五碳化合物的再生：部分三碳糖消耗 ATP，重新合成五碳化合物以繼續循環' }
         ],
         correctOrder: ['A', 'B', 'C'],
-        explanation: '卡爾文循環包含三個核心順序步驟：二氧化碳固定（Fixation）、還原作用（Reduction）以及受體 RuBP 的再生（Regeneration）。'
+        explanation: '固碳反應包含三個核心順序步驟：二氧化碳固定、還原作用以及五碳化合物的再生。'
       },
       {
         type: 'choice',
@@ -1706,18 +1705,45 @@
     // 本次測驗使用的隨機題目變數
     let questions = [];
 
-    // ====== 從大題庫中隨機挑選指定數量的題目 ======
-    function getRandomQuestions(num = 6) {
-      // 使用 Fisher-Yates 隨機打亂演算法
-      const shuffled = [...MASTER_QUESTIONS];
-      for (let i = shuffled.length - 1; i > 0; i--) {
+    // ====== 從大題庫中隨機挑選指定數量的題目 (保證其中 6 題為選擇題) ======
+    function getRandomQuestions(num = 8) {
+      // 分離選擇題與非選擇題
+      const choices = MASTER_QUESTIONS.filter(q => q.type === 'choice');
+      const nonChoices = MASTER_QUESTIONS.filter(q => q.type !== 'choice');
+
+      // 隨機打亂選擇題
+      const shuffledChoices = [...choices];
+      for (let i = shuffledChoices.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        const temp = shuffled[i];
-        shuffled[i] = shuffled[j];
-        shuffled[j] = temp;
+        const temp = shuffledChoices[i];
+        shuffledChoices[i] = shuffledChoices[j];
+        shuffledChoices[j] = temp;
       }
-      // 擷取前 num 題
-      return shuffled.slice(0, num);
+
+      // 隨機打亂非選擇題
+      const shuffledNonChoices = [...nonChoices];
+      for (let i = shuffledNonChoices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = shuffledNonChoices[i];
+        shuffledNonChoices[i] = shuffledNonChoices[j];
+        shuffledNonChoices[j] = temp;
+      }
+
+      // 挑選 6 題選擇題與 2 題非選擇題
+      const selected = [
+        ...shuffledChoices.slice(0, 6),
+        ...shuffledNonChoices.slice(0, 2)
+      ];
+
+      // 再將這 8 題隨機打亂順序，使混合出題
+      for (let i = selected.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = selected[i];
+        selected[i] = selected[j];
+        selected[j] = temp;
+      }
+
+      return selected;
     }
 
     // ==========================================================================
@@ -1732,8 +1758,8 @@
 
     // ====== 建立/重置測驗 ======
     function createQuiz() {
-      // 1. 隨機抽選 6 題作為本次測驗題目，增加每次重測的新鮮感與豐富度！
-      questions = getRandomQuestions(6);
+      // 1. 隨機抽選 8 題作為本次測驗題目，增加每次重測的新鮮感與豐富度！
+      questions = getRandomQuestions(8);
 
       // 動態更新進度條的總題數標示，免受題庫變動影響
       totalQNum.textContent = questions.length;
@@ -1793,40 +1819,16 @@
       }
     }
 
-    // ====== 扣除生命值並判定挑戰失敗 ======
+    // ====== 扣除生命值並判定挑戰失敗 (已停用生命值限制) ======
     function deductLife() {
-      if (lives > 0) {
-        lives--;
-        renderLives();
-        triggerShake(); // 答錯或超時觸發左右震動
-
-        if (lives <= 0) {
-          stopTimer();
-          // 短暫延遲後切換至挑戰失敗畫面
-          setTimeout(() => {
-            handleGameOver();
-          }, 500);
-          return true; // 代表遊戲已提前結束
-        }
-      }
-      return false;
+      triggerShake(); // 答錯時僅觸發左右震動回饋，不扣血亦不判定挑戰失敗
+      return false; // 代表不提前結束測驗，學生可完成所有題目
     }
 
-    // ====== 倒數計時器控制邏輯 ======
+    // ====== 倒數計時器控制邏輯 (已停用倒數) ======
     function startTimer() {
       stopTimer(); // 安全防止重複計時
-      timeLeft = 15;
-      updateTimerDisplay();
-
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-
-        if (timeLeft <= 0) {
-          stopTimer();
-          handleTimeout();
-        }
-      }, 1000);
+      // 已改為不倒數，故不啟動計時器與倒數邏輯
     }
 
     function stopTimer() {
@@ -1977,7 +1979,7 @@
                 <div class="basket-items" id="basketLightItems"></div>
               </div>
               <div class="basket" id="basketCalvin">
-                <div class="basket-title">🌀 卡爾文循環 (基質)</div>
+                <div class="basket-title">🌀 固碳反應 (基質)</div>
                 <div class="basket-items" id="basketCalvinItems"></div>
               </div>
             </div>
@@ -2016,7 +2018,7 @@
         });
       }
 
-      // 卡片載入完成後啟動 15 秒倒數
+      // 卡片載入完成後呼叫計時器 (目前已停用倒數)
       setTimeout(() => {
         startTimer();
       }, 450);
@@ -2174,7 +2176,7 @@
           const isCorrect = (subItem.category === 'both') || (userCategory === subItem.category);
           if (!isCorrect) {
             allCorrect = false;
-            wrongPlacements.push(`${subItem.name}(誤歸於${userCategory === 'light' ? '光反應' : '卡爾文'})`);
+            wrongPlacements.push(`${subItem.name}(誤歸於${userCategory === 'light' ? '光反應' : '固碳反應'})`);
           }
         });
 
@@ -2186,7 +2188,7 @@
           wrongQuestions.push({
             question: item.question,
             userAnswer: `錯誤歸類：${wrongPlacements.join('、')}`,
-            correctAnswer: `光反應包含：${item.items.filter(x => x.category === 'light' || x.category === 'both').map(x => x.name).join('、')}；卡爾文循環包含：${item.items.filter(x => x.category === 'calvin' || x.category === 'both').map(x => x.name).join('、')}`,
+            correctAnswer: `光反應包含：${item.items.filter(x => x.category === 'light' || x.category === 'both').map(x => x.name).join('、')}；固碳反應包含：${item.items.filter(x => x.category === 'calvin' || x.category === 'both').map(x => x.name).join('、')}`,
             explanation: item.explanation
           });
           deductLife();
@@ -2417,7 +2419,7 @@
         badgeClass = 'badge-master';
         badgeIcon = '👑';
         badgeTitle = '光合大師';
-        badgeDesc = '無懈可擊！你完美地解鎖了光反應與卡爾文循環的完整物質與能量轉換，是實至名歸的植物學大師！';
+        badgeDesc = '無懈可擊！你完美地解鎖了光反應與固碳反應的完整物質與能量轉換，是實至名歸的植物學大師！';
       } else if (rate >= 0.8) {
         badgeClass = 'badge-guardian';
         badgeIcon = '🌿';
@@ -2710,11 +2712,11 @@
         }
       }
       
-      // 2. 卡爾文循環 (Calvin Cycle / 碳反應)
+      // 2. 固碳反應 (碳反應)
       // 速率取決於：二氧化碳濃度與是否有累積能量 (ATP/NADPH)
       let calvinCycleRate = 0;
       if (co2 > 0 && energyLevel > 0) {
-        // 卡爾文循環消耗累積的能量與二氧化碳
+        // 固碳反應消耗累積的能量與二氧化碳
         calvinCycleRate = Math.min(energyLevel * 0.1, (co2 / 100) * 1.2);
         
         // 消耗能量條 (消耗 ATP/NADPH)
@@ -2736,13 +2738,13 @@
       
       // 如果光反應順暢，但二氧化碳為 0% (碳反應卡死)
       if (light > 0 && co2 === 0 && energyLevel >= 98) {
-        updateInsight('⚠️ <strong>警報：缺乏 CO₂！</strong><br>光反應已產生飽和的 ATP 與 NADPH，但卡爾文循環因缺乏二氧化碳而無法進行！<strong>無法合成葡萄糖！</strong>請拉高二氧化碳滑桿。', '⚠️');
+        updateInsight('⚠️ <strong>警報：缺乏 CO₂！</strong><br>光反應已產生飽和的 ATP 與 NADPH，但固碳反應因缺乏二氧化碳而無法進行！<strong>無法合成葡萄糖！</strong>請拉高二氧化碳滑桿。', '⚠️');
       }
       
       // 當順暢合成葡萄糖時的動態分析
       if (calvinCycleRate > 0 && lightReactionRate > 0) {
         const efficiency = Math.min(100, Math.floor((lightReactionRate + calvinCycleRate) * 45));
-        updateInsight(`✅ <strong>運作效率高 (${efficiency}%)</strong><br>光反應源源不絕光解水釋放 O₂，產生的 ATP 與 NADPH 隨即供卡爾文循環固定 CO₂，穩定合成葡萄糖！`, '✅');
+        updateInsight(`✅ <strong>運作效率高 (${efficiency}%)</strong><br>光反應源源不絕光解水釋放 O₂，產生的 ATP 與 NADPH 隨即供固碳反應固定 CO₂，穩定合成葡萄糖！`, '✅');
       }
     }
   </script>
