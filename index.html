@@ -225,23 +225,23 @@
       gap: 1.25rem;
     }
     .question {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #ffffff;
+      border: 1px solid var(--border);
       border-radius: 24px;
       padding: 1.4rem 1.4rem 1.2rem;
     }
     .question h5 {
       margin: 0 0 1rem;
       font-size: 1rem;
-      color: var(--cream);
+      color: var(--dark);
     }
     .options {
       display: grid;
       gap: 0.9rem;
     }
     .option {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: #f8f8f8;
+      border: 1px solid rgba(0,0,0,0.08);
       border-radius: 999px;
       padding: 0.9rem 1rem;
       display: flex;
@@ -251,29 +251,29 @@
       transition: border-color 0.25s ease, background 0.25s ease;
       cursor: pointer;
     }
-    .option:hover { border-color: rgba(211,155,70,0.7); }
-    .option.selected { background: rgba(211,155,70,0.15); border-color: rgba(211,155,70,0.9); }
+    .option:hover { border-color: var(--amber); background: #f4f4f4; }
+    .option.selected { background: rgba(181,122,34,0.16); border-color: rgba(181,122,34,0.9); }
     .option.correct { background: rgba(90,150,100,0.18); border-color: rgba(90,150,100,0.9); }
     .option.wrong { background: rgba(170,70,60,0.18); border-color: rgba(170,70,60,0.9); }
     .option small {
-      color: rgba(245,239,230,0.8);
+      color: var(--text-muted);
       font-size: 0.9rem;
     }
     .feedback {
       margin-top: 0.9rem;
       padding: 0.95rem 1rem;
       border-radius: 18px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(245,239,230,0.95);
+      background: #f8f8f8;
+      border: 1px solid var(--border);
+      color: var(--dark);
       line-height: 1.7;
     }
     .score-panel {
       margin-top: 1.5rem;
       padding: 1.6rem;
       border-radius: 26px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: #ffffff;
+      border: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
