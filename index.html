@@ -9,15 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --dark: #0f3b26;
-      --deep: #143f2f;
-      --cream: #f5efe6;
-      --amber: #d39b46;
-      --light: #e9ddcf;
-      --surface: #1f5a44;
-      --text: #f7f0e7;
-      --shadow: rgba(0, 0, 0, 0.18);
-      --border: rgba(255,255,255,0.14);
+      --dark: #274833;
+      --deep: #40674f;
+      --cream: #f7f2e8;
+      --amber: #c48a3f;
+      --light: #f0eadf;
+      --surface: #ffffff;
+      --text: #213127;
+      --shadow: rgba(33, 49, 39, 0.12);
+      --border: rgba(33, 49, 39, 0.12);
     }
 
     * { box-sizing: border-box; }
@@ -25,7 +25,7 @@
     body {
       margin: 0;
       font-family: 'Noto Sans TC', sans-serif;
-      background: linear-gradient(180deg, #081f12 0%, #102b1d 45%, #142f22 100%);
+      background: linear-gradient(180deg, #f7f7ef 0%, #eef0e3 55%, #e2e7d8 100%);
       color: var(--text);
       min-height: 100vh;
     }
@@ -36,14 +36,14 @@
       padding: 2rem 0 4rem;
     }
     .hero {
-      background: radial-gradient(circle at top left, rgba(212,155,70,0.16), transparent 35%),
-                  linear-gradient(180deg, var(--deep), var(--dark));
-      border: 1px solid rgba(255,255,255,0.08);
+      background: radial-gradient(circle at top left, rgba(196,138,63,0.18), transparent 35%),
+                  linear-gradient(180deg, #fbf5e8, #eef0e2);
+      border: 1px solid rgba(33,49,39,0.08);
       border-radius: 28px;
       padding: 3rem 2rem;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 18px 50px rgba(33,49,39,0.12);
     }
     .hero::after {
       content: '☘️';
@@ -93,13 +93,13 @@
       max-width: 760px;
       line-height: 1.8;
       font-size: 1.05rem;
-      color: rgba(245,239,230,0.93);
+      color: rgba(33,49,39,0.8);
     }
     .banner {
       margin: 2.5rem 0;
       padding: 1.5rem 2rem;
-      background: rgba(245,239,230,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #f9f6ec;
+      border: 1px solid rgba(33,49,39,0.08);
       border-radius: 26px;
       display: flex;
       justify-content: center;
@@ -107,8 +107,8 @@
       font-family: 'Noto Serif TC', serif;
       font-size: clamp(1.45rem, 2vw, 2rem);
       letter-spacing: 0.06em;
-      color: var(--cream);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+      color: var(--dark);
+      box-shadow: 0 12px 30px rgba(33,49,39,0.08);
     }
     .section-title {
       font-family: 'Noto Serif TC', serif;
